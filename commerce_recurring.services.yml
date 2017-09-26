@@ -1,0 +1,11 @@
+services:
+  plugin.manager.commerce_subscription_type:
+    class: Drupal\commerce_recurring\SubscriptionTypeManager
+    parent: default_plugin_manager
+  plugin.manager.commerce_recurring_engine:
+    class: Drupal\commerce_recurring\RecurringEngineManager
+    parent: default_plugin_manager
+  plugin.manager.commerce_recurring_usage_group:
+    class: Drupal\commerce_recurring\RecurringUsageGroupManager
+    parent: default_plugin_manager
+
