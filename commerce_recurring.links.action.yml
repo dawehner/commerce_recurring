@@ -1,0 +1,6 @@
+entity.commerce_recurring_engine.add_form:
+  route_name: entity.commerce_recurring_engine.add_form
+  title: 'Add recurring engine'
+  appears_on:
+    - entity.commerce_recurring_engine.collection
+

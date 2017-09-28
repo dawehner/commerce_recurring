@@ -5,15 +5,15 @@ namespace Drupal\commerce_recurring\Annotation;
 use Drupal\Component\Annotation\Plugin;
 
 /**
- * Defines the recurring engine plugin annotation object.
+ * Defines the usage type plugin annotation object.
  *
- * Plugin namespace: Plugin\Commerce\RecurringEngine.
+ * Plugin namespace: Plugin\Commerce\UsageType.
  *
  * @see plugin_api
  *
  * @Annotation
  */
-class CommerceRecurringUsageGroup extends Plugin {
+class CommerceRecurringUsageType extends Plugin {
 
   /**
    * The plugin ID.
@@ -23,7 +23,7 @@ class CommerceRecurringUsageGroup extends Plugin {
   public $id;
 
   /**
-   * The usage group label.
+   * The usage type label.
    *
    * @ingroup plugin_translatable
    *

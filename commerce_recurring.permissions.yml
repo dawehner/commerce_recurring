@@ -1,0 +1,4 @@
+administer commerce_recurring_engine:
+  title: 'Administer recurring engines'
+  'restrict access': TRUE
+

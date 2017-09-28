@@ -8,15 +8,15 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 
 /**
- * Manages discovery and instantiation of recurring usage group plugins.
+ * Manages discovery and instantiation of usage type plugins.
  *
- * @see \Drupal\commerce_recurring\Annotation\CommerceRecurringUsageGroup
+ * @see \Drupal\commerce_recurring\Annotation\CommerceRecurringUsageType
  * @see plugin_api
  */
-class RecurringUsageGroupManager extends DefaultPluginManager {
+class UsageTypeManager extends DefaultPluginManager {
 
   /**
-   * Constructs a new RecurringUsageGroupManager object.
+   * Constructs a new UsageTypeManager object.
    *
    * @param \Traversable $namespaces
    *   An object that implements \Traversable which contains the root paths
@@ -28,15 +28,15 @@ class RecurringUsageGroupManager extends DefaultPluginManager {
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
     parent::__construct(
-      'Plugin/Commerce/RecurringUsageGroup',
+      'Plugin/Commerce/UsageType',
       $namespaces,
       $module_handler,
-      'Drupal\commerce_recurring\Plugin\Commerce\RecurringUsageGroup\RecurringUsageGroupInterface',
-      'Drupal\commerce_recurring\Annotation\CommerceRecurringUsageGroup'
+      'Drupal\commerce_recurring\Plugin\Commerce\UsageType\UsageTypeInterface',
+      'Drupal\commerce_recurring\Annotation\CommerceRecurringUsageType'
     );
 
-    $this->alterInfo('commerce_recurring_usage_group_info');
-    $this->setCacheBackend($cache_backend, 'commerce_recurring_usage_group_plugins');
+    $this->alterInfo('commerce_recurring_usage_type_info');
+    $this->setCacheBackend($cache_backend, 'commerce_recurring_usage_type_plugins');
   }
 
   /**
