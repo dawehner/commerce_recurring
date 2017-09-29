@@ -8,7 +8,7 @@ use Drupal\Core\Database\DatabaseException;
 /**
  * Provides the default database storage backend for usage records.
  */
-class UsageRecordDatabaseStorage implements UsageRecordStorageInterface {
+class UsageRecordStorageDatabase implements UsageRecordStorageInterface {
   /**
    * The database connection in use.
    *
@@ -33,13 +33,13 @@ class UsageRecordDatabaseStorage implements UsageRecordStorageInterface {
    * @param string $group_name
    *   The group name. Required.
    *
-   * @param \Drupal\commerce_recurring\Entity\SubscriptionInterface
+   * @param int $subscription_id
    *   The subscription. Optional.
    *
-   * @param \Drupal\commerce_order\Entity\OrderInterface
+   * @param int $order_id
    *   The recurring order. Optional.
    */
-  public function fetchRecords($group_name, SubscriptionInterface $subscription = NULL, OrderInterface $order = NULL) {
+  protected function fetchRecords($group_name, $subscription_id = NULL, $order_id = NULL) {
 
   }
 
@@ -52,8 +52,7 @@ class UsageRecordDatabaseStorage implements UsageRecordStorageInterface {
    *   1. A method name
    *   2. A list of arguments
    *
-   * @return bool
-   *   Whether or not the operations succeeded.
+   * @return void
    */
   public function doMultiple($operations) {
     // @TODO: Open a transaction.
@@ -68,14 +67,13 @@ class UsageRecordDatabaseStorage implements UsageRecordStorageInterface {
 
       // Hopefully we're done here.
       $transaction->commit();
-
-      return TRUE;
     }
     catch (DatabaseException $e) {
       // Something went wrong. Sad.
       $transaction->rollback();
-
-      return FALSE;
+      // Propagate the exception? Not sure.
+      // @TODO: Figure this out.
+      throw $e;
     }
   }
 
