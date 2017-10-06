@@ -1,0 +1,12 @@
+langcode: en
+status: true
+label: Recurring
+id: recurring
+# @TODO: Figure out if we need a custom workflow, leaning yes.
+workflow: order_validation_fulfillment
+traits: {  }
+refresh_mode: recurring
+refresh_frequency: 300
+sendReceipt: true
+receiptBcc: ''
+
