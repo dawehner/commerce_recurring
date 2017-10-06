@@ -1,17 +1,17 @@
-commerce_recurring.recurring_engine:
-  label: Commerce recurring engine
+commerce_recurring.commerce_billing_schedule:
+  label: Commerce billing schedule
   provider: commerce_recurring
-  plugin_manager_service_id: plugin.manager.commerce_recurring_engine
+  plugin_manager_service_id: plugin.manager.commerce_billing_schedule
   plugin_definition_decorator_class: Drupal\plugin\PluginDefinition\ArrayPluginDefinitionDecorator
 
-commerce_recurring.subscription_type:
-  label: Commerce subscription type
-  provider: commerce_recurring
-  plugin_manager_service_id: plugin.manager.commerce_subscription_type
-  plugin_definition_decorator_class: Drupal\plugin\PluginDefinition\ArrayPluginDefinitionDecorator
-
-commerce_recurring.usage_type:
-  label: Commerce usage type
-  provider: commerce_recurring
-  plugin_manager_service_id: plugin.manager.commerce_usage_type
-  plugin_definition_decorator_class: Drupal\plugin\PluginDefinition\ArrayPluginDefinitionDecorator
+#commerce_recurring.subscription_type:
+#  label: Commerce subscription type
+#  provider: commerce_recurring
+#  plugin_manager_service_id: plugin.manager.commerce_subscription_type
+#  plugin_definition_decorator_class: Drupal\plugin\PluginDefinition\ArrayPluginDefinitionDecorator
+#
+#commerce_recurring.usage_type:
+#  label: Commerce usage type
+#  provider: commerce_recurring
+#  plugin_manager_service_id: plugin.manager.commerce_usage_type
+#  plugin_definition_decorator_class: Drupal\plugin\PluginDefinition\ArrayPluginDefinitionDecorator

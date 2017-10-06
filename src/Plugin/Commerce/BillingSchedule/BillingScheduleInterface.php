@@ -5,8 +5,8 @@ namespace Drupal\commerce_recurring\Plugin\Commerce\BillingSchedule;
 use Drupal\commerce_recurring\BillingCycle;
 use Drupal\Component\Plugin\ConfigurablePluginInterface;
 use Drupal\Core\Plugin\PluginFormInterface;
-use Drupal\commerce\BundlePluginInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\entity\BundlePlugin\BundlePluginInterface;
 
 /**
  * Entity bundle plugin for billing cycle types.

@@ -30,6 +30,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *       "default" = "Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider",
  *     },
  *   },
+ *   bundle_plugin_type = "commerce_billing_schedule",
  *   admin_permission = "administer commerce_billing_schedule",
  *   config_prefix = "commerce_billing_schedule",
  *   entity_keys = {
@@ -47,9 +48,9 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "configuration",
  *   },
  *   links = {
- *     "add-form" = "/admin/commerce/config/billing-schedule/add",
- *     "edit-form" = "/admin/commerce/config/billing-schedule/manage/{commerce_billing_schedule}",
- *     "delete-form" = "/admin/commerce/config/billing-schedule/manage/{commerce_billing_schedule}/delete",
+ *     "add-form" = "/admin/commerce/config/payment/billing-schedule/add",
+ *     "edit-form" = "/admin/commerce/config/payment/billing-schedule/manage/{commerce_billing_schedule}",
+ *     "delete-form" = "/admin/commerce/config/payment/billing-schedule/manage/{commerce_billing_schedule}/delete",
  *     "collection" =  "/admin/commerce/config/billing-schedule"
  *   }
  * )

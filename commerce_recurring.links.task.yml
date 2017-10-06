@@ -1,8 +1,8 @@
 # @TODO: Subscriptions collections/canonical?
 #
 
-entity.commerce_recurring_engine.edit_form:
-  route_name: entity.commerce_recurring_engine.edit_form
-  base_route: entity.commerce_recurring_engine.edit_form
+entity.commerce_billing_schedule.edit_form:
+  route_name: entity.commerce_billing_schedule.edit_form
+  base_route: entity.commerce_billing_schedule.edit_form
   title: Edit
 

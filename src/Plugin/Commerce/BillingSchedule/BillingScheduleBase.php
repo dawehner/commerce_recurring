@@ -62,5 +62,4 @@ abstract class BillingScheduleBase extends PluginBase implements BillingSchedule
     return [];
   }
 
-
 }

@@ -1,6 +1,6 @@
-entity.commerce_recurring_engine.add_form:
-  route_name: entity.commerce_recurring_engine.add_form
-  title: 'Add recurring engine'
+entity.commerce_billing_schedule.add_form:
+  route_name: entity.commerce_billing_schedule.add_form
+  title: 'Add billing schedule'
   appears_on:
-    - entity.commerce_recurring_engine.collection
+    - entity.commerce_billing_schedule.collection
 

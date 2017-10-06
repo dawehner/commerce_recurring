@@ -3,12 +3,10 @@ type: module
 description: Recurring orders and subscriptions
 core: 8.x
 package: Commerce
-configure: entity.commerce_recurring_cycle.collection
-configure: entity.commerce_subscription.collection
 dependencies:
   - commerce
-  - commerce_checkout
-  - commerce_product
-  - state_machine
-  - recurring_period
+#  - commerce_checkout
+#  - commerce_product
+#  - state_machine
+#  - recurring_period
 

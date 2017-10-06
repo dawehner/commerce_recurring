@@ -1,4 +1,4 @@
-administer commerce_recurring_engine:
-  title: 'Administer recurring engines'
+administer commerce_billing_schedules:
+  title: 'Administer billing schedules'
   'restrict access': TRUE
 
