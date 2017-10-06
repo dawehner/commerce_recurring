@@ -34,6 +34,7 @@ class BillingScheduleTest extends KernelTestBase {
     BillingSchedule::create([
       'id' => 'test_id',
       'label' => 'Test label',
+      'display_label' => 'Test customer label',
       'plugin' => 'test_plugin',
       'configuration' => [
         'key' => 'value',
@@ -45,6 +46,7 @@ class BillingScheduleTest extends KernelTestBase {
     $this->assertEquals('test_id', $billing_schedule->id());
     $this->assertEquals('Test label', $billing_schedule->label());
     $this->assertEquals('test_plugin', $billing_schedule->getPluginId());
+    $this->assertEquals('Test customer label', $billing_schedule->getDisplayLabel());
   }
 
   public function testPluginConfiguration() {

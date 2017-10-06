@@ -41,6 +41,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   config_export = {
  *     "id",
  *     "label",
+ *     "display_label",
  *     "status",
  *     "plugin",
  *     "configuration",
@@ -70,6 +71,13 @@ class BillingSchedule extends ConfigEntityBase implements BillingScheduleInterfa
   protected $label;
 
   /**
+   * The label displayed to the customer.
+   *
+   * @var string
+   */
+  protected $display_label;
+
+  /**
    * The plugin ID.
    *
    * @var string
@@ -89,6 +97,13 @@ class BillingSchedule extends ConfigEntityBase implements BillingScheduleInterfa
    * @var \Drupal\commerce\CommerceSinglePluginCollection
    */
   protected $pluginCollection;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDisplayLabel() {
+    return $this->display_label;
+  }
 
   /**
    * {@inheritdoc}

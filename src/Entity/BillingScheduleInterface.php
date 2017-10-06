@@ -15,6 +15,13 @@ use Drupal\Core\Entity\EntityWithPluginCollectionInterface;
 interface BillingScheduleInterface extends ConfigEntityInterface, EntityWithPluginCollectionInterface {
 
   /**
+   * Returns the customer facing label.
+   *
+   * @return string
+   */
+  public function getDisplayLabel();
+
+  /**
    * Gets the billing schedule engine plugin.
    *
    * @return \Drupal\commerce_recurring\Plugin\Commerce\BillingSchedule\BillingScheduleInterface
