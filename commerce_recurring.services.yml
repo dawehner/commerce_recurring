@@ -7,6 +7,10 @@ services:
     class: Drupal\commerce_recurring\RecurringEngineManager
     parent: default_plugin_manager
 
+  plugin.manager.commerce_billing_schedule:
+    class: Drupal\commerce_recurring\BillingScheduleManager
+    parent: default_plugin_manager
+
   plugin.manager.commerce_usage_type:
     class: Drupal\commerce_recurring\UsageTypeManager
     parent: default_plugin_manager

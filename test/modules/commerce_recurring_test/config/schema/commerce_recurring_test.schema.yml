@@ -1,0 +1,6 @@
+commerce_recurring.commerce_billing_schedule.plugin.test_plugin:
+  type: mapping
+  mapping:
+    key:
+      type: string
+      label: 'Key'

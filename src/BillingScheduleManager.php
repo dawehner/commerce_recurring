@@ -8,15 +8,15 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 
 /**
- * Manages discovery and instantiation of recurring engine plugins.
+ * Manages discovery and instantiation of billing schedule plugins.
  *
- * @see \Drupal\commerce_recurring\Annotation\CommerceRecurringEngine
+ * @see \Drupal\commerce_recurring\Annotation\BillingSchedule
  * @see plugin_api
  */
-class RecurringEngineManager extends DefaultPluginManager {
+class BillingScheduleManager extends DefaultPluginManager {
 
   /**
-   * Constructs a new RecurringEngineManager object.
+   * Constructs a new BillingScheduleManager object.
    *
    * @param \Traversable $namespaces
    *   An object that implements \Traversable which contains the root paths
@@ -28,15 +28,19 @@ class RecurringEngineManager extends DefaultPluginManager {
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
     parent::__construct(
-      'Plugin/Commerce/RecurringEngine',
+      'Plugin/Commerce/BillingSchedule',
       $namespaces,
       $module_handler,
-      'Drupal\commerce_recurring\Plugin\Commerce\RecurringEngine\RecurringEngineInterface',
-      'Drupal\commerce_recurring\Annotation\CommerceRecurringEngine'
+      'Drupal\commerce_recurring\Plugin\Commerce\BillingSchedule\BillingScheduleInterface',
+      'Drupal\commerce_recurring\Annotation\BillingSchedule'
     );
 
-    $this->alterInfo('commerce_recurring_engine_info');
-    $this->setCacheBackend($cache_backend, 'commerce_recurring_engine_plugins');
+    $this->alterInfo('commerce_billing_schedule');
+    $this->setCacheBackend($cache_backend, 'commerce_recurring_billing_schedule');
+  }
+
+  public function getDefinitions() {
+    return parent::getDefinitions();
   }
 
   /**
@@ -47,7 +51,7 @@ class RecurringEngineManager extends DefaultPluginManager {
 
     foreach (['id', 'label'] as $required_property) {
       if (empty($definition[$required_property])) {
-        throw new PluginException(sprintf('The recurring engine %s must define the %s property.', $plugin_id, $required_property));
+        throw new PluginException(sprintf('The billing schedule %s must define the %s property.', $plugin_id, $required_property));
       }
     }
   }
