@@ -27,7 +27,7 @@ class BillingScheduleForm extends CommercePluginEntityFormBase {
 
 
   /**
-   * Constructs a new PaymentGatewayForm object.
+   * Constructs a new BillingScheduleForm object.
    *
    * @param \Drupal\commerce_recurring\BillingScheduleManager $plugin_manager
    *   The payment gateway plugin manager.
