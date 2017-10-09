@@ -20,7 +20,7 @@ use Drupal\Core\Field\FormatterBase;
  *   }
  * )
  */
-class BillingCycleFormatter extends FormatterBase {
+class BillingCycleDefaultFormatter extends FormatterBase {
 
   /**
    * {@inheritdoc}

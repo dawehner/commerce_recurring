@@ -17,7 +17,7 @@ use Drupal\Core\Form\FormStateInterface;
  *   },
  *  )
  */
-class BillingCycleWidget extends WidgetBase {
+class BillingCycleDefaultWidget extends WidgetBase {
 
   /**
    * {@inheritdoc}
