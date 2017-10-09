@@ -24,16 +24,4 @@ class NoopBillingSchedule extends BillingScheduleBase {
     return new BillingCycle('todo', new DrupalDateTime(), new DrupalDateTime());
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function renewCycle(BillingCycle $cycle) {
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function closeCycle(BillingCycle $cycle) {
-  }
-
 }

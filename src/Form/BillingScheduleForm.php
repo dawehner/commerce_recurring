@@ -66,7 +66,7 @@ class BillingScheduleForm extends CommercePluginEntityFormBase {
     $plugin_configuration = $gateway->getPluginId() == $plugin ? $gateway->getPluginConfiguration() : [];
 
     $form['label'] = [
-      '#title' => t('Admin label'),
+      '#title' => t('Label'),
       '#type' => 'textfield',
       '#default_value' => $this->entity->label(),
       '#description' => t('The human readable name of the billing schedule'),
@@ -96,7 +96,6 @@ class BillingScheduleForm extends CommercePluginEntityFormBase {
     $form['#tree'] = TRUE;
     $form['#prefix'] = '<div id="' . $wrapper_id . '">';
     $form['#suffix'] = '</div>';
-    $form['#tree'] = TRUE;
 
     $form['plugin'] = [
       '#type' => 'radios',
@@ -111,7 +110,7 @@ class BillingScheduleForm extends CommercePluginEntityFormBase {
       ],
     ];
 
-      $form['configuration'] = [
+    $form['configuration'] = [
       '#type' => 'commerce_plugin_configuration',
       '#plugin_type' => 'commerce_billing_schedule',
       '#plugin_id' => $plugin,

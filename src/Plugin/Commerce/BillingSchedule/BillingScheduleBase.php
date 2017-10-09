@@ -2,6 +2,7 @@
 
 namespace Drupal\commerce_recurring\Plugin\Commerce\BillingSchedule;
 
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\PluginBase;
 
@@ -27,8 +28,10 @@ abstract class BillingScheduleBase extends PluginBase implements BillingSchedule
    * {@inheritdoc}
    */
   public function setConfiguration(array $configuration) {
-    $this->configuration = $configuration;
-    return $this;
+    $this->configuration = NestedArray::mergeDeep(
+      $this->defaultConfiguration(),
+      $configuration
+    );
   }
 
   /**

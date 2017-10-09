@@ -32,18 +32,6 @@ class TestPlugin extends BillingScheduleBase {
   /**
    * {@inheritdoc}
    */
-  public function renewCycle(BillingCycle $cycle) {
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function closeCycle(BillingCycle $cycle) {
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function defaultConfiguration() {
     return ['key' => 'value'];
   }
@@ -64,7 +52,10 @@ class TestPlugin extends BillingScheduleBase {
    * {@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    $this->configuration['key'] = $form_state->getValue('key');
+    if (!$form_state->getErrors()) {
+      $values = $form_state->getValue($form['#parents']);
+      $this->configuration['key'] = $values['key'];
+    }
   }
 
 }

@@ -32,23 +32,23 @@ class BillingScheduleTest extends BrowserTestBase {
     ], 'Save');
     $this->clickLink('Edit');
     $this->submitForm([
-      'configuration[key]' => 'value1',
+      'configuration[test_plugin][key]' => 'value1',
     ], 'Save');
     $this->assertSession()->addressEquals('admin/commerce/config/billing-schedule');
     $this->assertSession()->pageTextContains('Billing schedule My admin label created');
 
     // 2. Ensure the entity is listed
-    $this->assertSession()->pageTextContains('test_id');
+    $this->assertSession()->pageTextContains('My admin label');
 
     // 3. Edit the entity
     $this->clickLink('Edit');
-    $this->assertSession()->fieldValueEquals('configuration[key]', 'value1');
+    $this->assertSession()->fieldValueEquals('configuration[test_plugin][key]', 'value1');
     $this->submitForm([
-      'configuration[key]' => 'value2',
+      'configuration[test_plugin][key]' => 'value2',
     ], 'Save');
     $this->assertSession()->addressEquals('admin/commerce/config/billing-schedule');
     $this->clickLink('Edit');
-    $this->assertSession()->fieldValueEquals('configuration[key]', 'value2');
+    $this->assertSession()->fieldValueEquals('configuration[test_plugin][key]', 'value2');
     $this->submitForm([], 'Save');
 
     // 4. Delete the entity
