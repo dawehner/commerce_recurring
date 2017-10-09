@@ -19,4 +19,3 @@ commerce_recurring.commerce_billing_schedule.*:
 
 commerce_recurring.commerce_billing_schedule.plugin.*:
   type: mapping
-  mapping: {}
