@@ -10,17 +10,19 @@ use Drupal\Core\Plugin\PluginFormInterface;
 use Drupal\Core\Session\AccountInterface;
 
 /**
- * Entity bundle plugin for billing cycle types.
+ * Plugin for billing cycle types.
+ *
+ * The plugin is responsible for calculating billing cycles, aka. when is the
+ * next time someone should pay again.
  */
 interface BillingScheduleInterface extends ConfigurablePluginInterface, PluginFormInterface, PluginInspectionInterface {
 
   /**
-   * @param \Drupal\Core\Session\AccountInterface $account
    * @param \Drupal\Core\Datetime\DrupalDateTime $startTime
    *
    * @return \Drupal\commerce_recurring\BillingCycle
    */
-  public function getFirstBillingCycle(AccountInterface $account, DrupalDateTime $startTime);
+  public function getFirstBillingCycle(DrupalDateTime $startTime);
 
   /**
    * @param \Drupal\commerce_recurring\BillingCycle $cycle
@@ -28,10 +30,6 @@ interface BillingScheduleInterface extends ConfigurablePluginInterface, PluginFo
    * @return \Drupal\commerce_recurring\BillingCycle
    */
   public function getNextBillingCycle(BillingCycle $cycle);
-
-  public function renewCycle(BillingCycle $cycle);
-
-  public function closeCycle(BillingCycle $cycle);
 
 }
 

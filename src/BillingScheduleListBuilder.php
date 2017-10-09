@@ -16,16 +16,12 @@ class BillingScheduleListBuilder extends EntityListBuilder {
   public function buildHeader() {
     $header = [
       'label' => [
-        'data' => $this->t('Admin label'),
+        'data' => $this->t('Label'),
         'class' => [RESPONSIVE_PRIORITY_MEDIUM],
       ],
       'type' => [
         'data' => $this->t('Type'),
         'class' => [RESPONSIVE_PRIORITY_MEDIUM],
-      ],
-      'id' => [
-        'data' => $this->t('Id'),
-        'class' => [RESPONSIVE_PRIORITY_LOW],
       ],
     ];
 
@@ -41,7 +37,6 @@ class BillingScheduleListBuilder extends EntityListBuilder {
     $row = [
       'label' => $entity->label(),
       'type' => $entity->getPlugin()->getPluginDefinition()['label'],
-      'id' => $entity->id(),
     ];
 
     return $row + parent::buildRow($entity);

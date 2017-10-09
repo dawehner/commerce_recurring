@@ -30,7 +30,6 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *       "default" = "Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider",
  *     },
  *   },
- *   bundle_plugin_type = "commerce_billing_schedule",
  *   admin_permission = "administer commerce_billing_schedules",
  *   config_prefix = "commerce_billing_schedule",
  *   entity_keys = {

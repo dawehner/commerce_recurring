@@ -6,7 +6,6 @@ use Drupal\commerce_recurring\BillingCycle;
 use Drupal\commerce_recurring\Plugin\Commerce\BillingSchedule\BillingScheduleBase;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Session\AccountInterface;
 
 /**
  * @CommerceBillingSchedule(
@@ -19,7 +18,7 @@ class TestPlugin extends BillingScheduleBase {
   /**
    * {@inheritdoc}
    */
-  public function getFirstBillingCycle(AccountInterface $account, DrupalDateTime $startTime) {
+  public function getFirstBillingCycle(DrupalDateTime $startTime) {
     return new BillingCycle('My first billing cycle', new DrupalDateTime(), new DrupalDateTime());
   }
 

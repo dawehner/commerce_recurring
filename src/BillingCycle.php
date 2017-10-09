@@ -12,14 +12,7 @@ use Drupal\Core\Datetime\DrupalDateTime;
  *
  * @see \Drupal\commerce_recurring\Plugin\Commerce\BillingSchedule\BillingScheduleInterface
  */
-class BillingCycle {
-
-  /**
-   * A human readable label for the billing cycle.
-   *
-   * @var string
-   */
-  protected $label;
+final class BillingCycle {
 
   /**
    * An increasing number for the billing cycle.
@@ -33,47 +26,27 @@ class BillingCycle {
    *
    * @var \Drupal\Core\Datetime\DrupalDateTime
    */
-  protected $startDateTime;
+  protected $startDate;
 
   /**
    * The time the billing cycle ends.
    *
    * @var \Drupal\Core\Datetime\DrupalDateTime
    */
-  protected $endDateTime;
+  protected $endDate;
 
   /**
    * BillingCycle constructor.
    *
-   * @param string $label
-   *   The label.
-   * @param \Drupal\Core\Datetime\DrupalDateTime $startDateTime
+   * @param \Drupal\Core\Datetime\DrupalDateTime $startDate
    *   The start time.
-   * @param \Drupal\Core\Datetime\DrupalDateTime $endDateTime
+   * @param \Drupal\Core\Datetime\DrupalDateTime $endDate
    *   The end time.
    */
-  public function __construct($label, $index, DrupalDateTime $startDateTime, DrupalDateTime $endDateTime) {
-    $this->label = $label;
+  public function __construct( $index, DrupalDateTime $startDate, DrupalDateTime $endDate) {
     $this->index = $index;
-    $this->startDateTime = $startDateTime;
-    $this->endDateTime = $endDateTime;
-  }
-
-  /**
-   * @return string
-   */
-  public function getLabel() {
-    return $this->label;
-  }
-
-  /**
-   * @param string $label
-   *
-   * @return $this
-   */
-  public function setLabel($label) {
-    $this->label = $label;
-    return $this;
+    $this->startDate = $startDate;
+    $this->endDate = $endDate;
   }
 
   /**
@@ -84,47 +57,17 @@ class BillingCycle {
   }
 
   /**
-   * @param int $index
-   *
-   * @return $this
-   */
-  public function setIndex($index) {
-    $this->index = $index;
-    return $this;
-  }
-
-  /**
    * @return \Drupal\Core\Datetime\DrupalDateTime
    */
   public function getStartDateTime() {
-    return $this->startDateTime;
-  }
-
-  /**
-   * @param \Drupal\Core\Datetime\DrupalDateTime $startDateTime
-   *
-   * @return $this
-   */
-  public function setStartDateTime($startDateTime) {
-    $this->startDateTime = $startDateTime;
-    return $this;
+    return $this->startDate;
   }
 
   /**
    * @return \Drupal\Core\Datetime\DrupalDateTime
    */
   public function getEndDateTime() {
-    return $this->endDateTime;
-  }
-
-  /**
-   * @param \Drupal\Core\Datetime\DrupalDateTime $endDateTime
-   *
-   * @return $this
-   */
-  public function setEndDateTime($endDateTime) {
-    $this->endDateTime = $endDateTime;
-    return $this;
+    return $this->endDate;
   }
 
 }

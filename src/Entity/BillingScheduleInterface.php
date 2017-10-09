@@ -9,8 +9,6 @@ use Drupal\Core\Entity\EntityWithPluginCollectionInterface;
 
 /**
  * Defines the interface for billing schedules configuration entities.
- *
- * Stores configuration for billing schedules engine plugins.
  */
 interface BillingScheduleInterface extends ConfigEntityInterface, EntityWithPluginCollectionInterface {
 

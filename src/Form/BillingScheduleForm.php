@@ -25,12 +25,11 @@ class BillingScheduleForm extends CommercePluginEntityFormBase {
    */
   protected $entity;
 
-
   /**
    * Constructs a new BillingScheduleForm object.
    *
    * @param \Drupal\commerce_recurring\BillingScheduleManager $plugin_manager
-   *   The payment gateway plugin manager.
+   *   The billing schedule plugin manager.
    */
   public function __construct(BillingScheduleManager $plugin_manager) {
     $this->pluginManager = $plugin_manager;
@@ -112,11 +111,12 @@ class BillingScheduleForm extends CommercePluginEntityFormBase {
       ],
     ];
 
-    if ($this->entity->getPlugin()) {
-      $form['configuration'] = [];
-      $subform_state = SubformState::createForSubform($form['configuration'], $form, $form_state);
-      $form['configuration'] = $this->entity->getPlugin()->buildConfigurationForm($form['configuration'], $subform_state);
-    }
+      $form['configuration'] = [
+      '#type' => 'commerce_plugin_configuration',
+      '#plugin_type' => 'commerce_billing_schedule',
+      '#plugin_id' => $plugin,
+      '#default_value' => $plugin_configuration,
+    ];
 
     $form['status'] = [
       '#type' => 'radios',
@@ -141,23 +141,10 @@ class BillingScheduleForm extends CommercePluginEntityFormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    parent::validateForm($form, $form_state);
-
-    if ($this->entity->getPlugin()) {
-      $this->entity->getPlugin()->validateConfigurationForm($form['configuration'], SubformState::createForSubform($form['configuration'], $form, $form_state));
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
 
-    if ($this->entity->getPlugin()) {
-      $this->entity->getPlugin()->submitConfigurationForm($form['configuration'], SubformState::createForSubform($form['configuration'], $form, $form_state));
-    }
+    $this->entity->setPluginConfiguration($form_state->getValue(['configuration']));
   }
 
   /**
