@@ -19,7 +19,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     plural = "@count billing schedules",
  *   ),
  *   handlers = {
- *     "list_builder" = "\Drupal\Core\Entity\EntityListBuilder",
+ *     "list_builder" = "\Drupal\commerce_recurring\BillingScheduleListBuilder",
  *     "storage" = "\Drupal\Core\Config\Entity\ConfigEntityStorage",
  *     "form" = {
  *       "add" = "\Drupal\commerce_recurring\Form\BillingScheduleForm",
@@ -31,7 +31,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     },
  *   },
  *   bundle_plugin_type = "commerce_billing_schedule",
- *   admin_permission = "administer commerce_billing_schedule",
+ *   admin_permission = "administer commerce_billing_schedules",
  *   config_prefix = "commerce_billing_schedule",
  *   entity_keys = {
  *     "id" = "id",
@@ -83,7 +83,7 @@ class BillingSchedule extends ConfigEntityBase implements BillingScheduleInterfa
    *
    * @var string
    */
-  protected $plugin;
+  protected $plugin = 'noop';
 
   /**
    * The plugin configuration.

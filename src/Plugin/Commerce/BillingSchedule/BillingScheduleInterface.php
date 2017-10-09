@@ -4,22 +4,23 @@ namespace Drupal\commerce_recurring\Plugin\Commerce\BillingSchedule;
 
 use Drupal\commerce_recurring\BillingCycle;
 use Drupal\Component\Plugin\ConfigurablePluginInterface;
+use Drupal\Component\Plugin\PluginInspectionInterface;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Plugin\PluginFormInterface;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\entity\BundlePlugin\BundlePluginInterface;
 
 /**
  * Entity bundle plugin for billing cycle types.
  */
-interface BillingScheduleInterface extends BundlePluginInterface, ConfigurablePluginInterface, PluginFormInterface {
+interface BillingScheduleInterface extends ConfigurablePluginInterface, PluginFormInterface, PluginInspectionInterface {
 
   /**
    * @param \Drupal\Core\Session\AccountInterface $account
-   * @param \DateTime $startTime
+   * @param \Drupal\Core\Datetime\DrupalDateTime $startTime
    *
    * @return \Drupal\commerce_recurring\BillingCycle
    */
-  public function getBillingCycle(AccountInterface $account, \DateTime $startTime);
+  public function getBillingCycle(AccountInterface $account, DrupalDateTime $startTime);
 
   /**
    * @param \Drupal\commerce_recurring\BillingCycle $cycle

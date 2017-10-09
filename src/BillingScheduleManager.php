@@ -39,10 +39,6 @@ class BillingScheduleManager extends DefaultPluginManager {
     $this->setCacheBackend($cache_backend, 'commerce_recurring_billing_schedule');
   }
 
-  public function getDefinitions() {
-    return parent::getDefinitions();
-  }
-
   /**
    * {@inheritdoc}
    */
