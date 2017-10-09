@@ -9,7 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 
 /**
- * @BillingSchedule(
+ * @CommerceBillingSchedule(
  *   id = "test_plugin",
  *   label = "Test label"
  * )

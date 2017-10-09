@@ -15,7 +15,7 @@ use Drupal\Core\Entity\EntityWithPluginCollectionInterface;
 interface BillingScheduleInterface extends ConfigEntityInterface, EntityWithPluginCollectionInterface {
 
   /**
-   * Returns the customer facing label.
+   * Gets the customer facing label.
    *
    * @return string
    */

@@ -7,7 +7,7 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Session\AccountInterface;
 
 /**
- * @BillingSchedule(id = "noop", label=@Translation("Default"))
+ * @CommerceBillingSchedule(id = "noop", label=@Translation("Default"))
  */
 class NoopBillingSchedule extends BillingScheduleBase {
 

@@ -32,7 +32,7 @@ class BillingScheduleManager extends DefaultPluginManager {
       $namespaces,
       $module_handler,
       'Drupal\commerce_recurring\Plugin\Commerce\BillingSchedule\BillingScheduleInterface',
-      'Drupal\commerce_recurring\Annotation\BillingSchedule'
+      'Drupal\commerce_recurring\Annotation\CommerceBillingSchedule'
     );
 
     $this->alterInfo('commerce_billing_schedule');
