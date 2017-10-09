@@ -55,11 +55,4 @@ abstract class BillingScheduleBase extends PluginBase implements BillingSchedule
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function buildFieldDefinitions() {
-    return [];
-  }
-
 }
