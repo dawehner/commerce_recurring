@@ -2,88 +2,87 @@
 
 namespace Drupal\commerce_recurring\Entity;
 
-use Drupal\commmerce\CommerceSinglePluginCollection;
+use Drupal\commerce\CommerceSinglePluginCollection;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 
 /**
- * Defines the recurring engine entity class.
+ * Defines the billing schedule entity class.
  *
  * @ConfigEntityType(
- *   id = "commerce_recurring_engine",
- *   label = @Translation("Recurring engine"),
- *   label_collection = @Translation("Recurring engines"),
- *   label_singular = @Translation("recurring engine"),
- *   label_plural = @Translation("recurring engines"),
+ *   id = "commerce_billing_schedule",
+ *   label = @Translation("Billing schedule"),
+ *   label_collection = @Translation("Billing schedule"),
+ *   label_singular = @Translation("billing schedule"),
+ *   label_plural = @Translation("billing schedule"),
  *   label_count = @PluralTranslation(
- *     singular = "@countrecurring engines",
- *     plural = "@count recurring engines",
+ *     singular = "@count billing schedule",
+ *     plural = "@count billing schedules",
  *   ),
  *   handlers = {
- *     "list_builder" = "Drupal\commerce_recurring\RecurringEngineListBuilder",
- *     "storage" = "Drupal\commerce_recurring\RecurringEngineStorage",
+ *     "list_builder" = "\Drupal\commerce_recurring\BillingScheduleListBuilder",
+ *     "storage" = "\Drupal\Core\Config\Entity\ConfigEntityStorage",
  *     "form" = {
- *       "add" = "Drupal\commerce_recurring\Form\RecurringEngineForm",
- *       "edit" = "Drupal\commerce_recurring\Form\RecurringEngineForm",
- *       "delete" = "Drupal\Core\Entity\EntityDeleteForm"
+ *       "add" = "\Drupal\commerce_recurring\Form\BillingScheduleForm",
+ *       "edit" = "\Drupal\commerce_recurring\Form\BillingScheduleForm",
+ *       "delete" = "\Drupal\Core\Entity\EntityDeleteForm"
  *     },
  *     "route_provider" = {
  *       "default" = "Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider",
  *     },
  *   },
- *   admin_permission = "administer commerce_recurring_engine",
- *   config_prefix = "commerce_recurring_engine",
+ *   admin_permission = "administer commerce_billing_schedules",
+ *   config_prefix = "commerce_billing_schedule",
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",
  *     "uuid" = "uuid",
- *     "weight" = "weight",
  *     "status" = "status",
  *   },
  *   config_export = {
  *     "id",
  *     "label",
- *     "weight",
+ *     "display_label",
  *     "status",
  *     "plugin",
  *     "configuration",
  *   },
  *   links = {
- *     "add-form" = "/admin/commerce/config/recurring-engines/add",
- *     "edit-form" = "/admin/commerce/config/recurring-engines/manage/{commerce_recurring_engine}",
- *     "delete-form" = "/admin/commerce/config/recurring-engines/manage/{commerce_recurring_engine}/delete",
- *     "collection" =  "/admin/commerce/config/recurring-engines"
+ *     "add-form" = "/admin/commerce/config/payment/billing-schedule/add",
+ *     "edit-form" = "/admin/commerce/config/payment/billing-schedule/manage/{commerce_billing_schedule}",
+ *     "delete-form" = "/admin/commerce/config/payment/billing-schedule/manage/{commerce_billing_schedule}/delete",
+ *     "collection" =  "/admin/commerce/config/billing-schedule"
  *   }
  * )
  */
-class RecurringEngine extends ConfigEntityBase implements RecurringEngineInterface {
+class BillingSchedule extends ConfigEntityBase implements BillingScheduleInterface {
 
   /**
-   * The recurring engine ID.
+   * The billing schedule ID.
    *
    * @var string
    */
   protected $id;
 
   /**
-   * The recurring engine label.
+   * The billing schedule label.
    *
    * @var string
    */
   protected $label;
 
   /**
-   * The recurring engine weight.
+   * The label displayed to the customer.
    *
-   * @var int
+   * @var string
    */
-  protected $weight;
+  protected $display_label;
 
   /**
    * The plugin ID.
    *
    * @var string
    */
-  protected $plugin;
+  protected $plugin = 'noop';
 
   /**
    * The plugin configuration.
@@ -102,16 +101,8 @@ class RecurringEngine extends ConfigEntityBase implements RecurringEngineInterfa
   /**
    * {@inheritdoc}
    */
-  public function getWeight() {
-    return $this->weight;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setWeight($weight) {
-    $this->weight = $weight;
-    return $weight;
+  public function getDisplayLabel() {
+    return $this->display_label;
   }
 
   /**
@@ -168,10 +159,10 @@ class RecurringEngine extends ConfigEntityBase implements RecurringEngineInterfa
    */
   public function set($property_name, $value) {
     // Invoke the setters to clear related properties.
-    if ($property_name == 'plugin') {
+    if ($property_name === 'plugin') {
       $this->setPluginId($value);
     }
-    elseif ($property_name == 'configuration') {
+    elseif ($property_name === 'configuration') {
       $this->setPluginConfiguration($value);
     }
     else {
@@ -189,7 +180,7 @@ class RecurringEngine extends ConfigEntityBase implements RecurringEngineInterfa
    */
   protected function getPluginCollection() {
     if (!$this->pluginCollection) {
-      $plugin_manager = \Drupal::service('plugin.manager.commerce_recurring_engine');
+      $plugin_manager = \Drupal::service('plugin.manager.commerce_billing_schedule');
       $this->pluginCollection = new CommerceSinglePluginCollection($plugin_manager, $this->plugin, $this->configuration, $this->id);
     }
     return $this->pluginCollection;

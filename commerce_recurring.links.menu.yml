@@ -1,12 +1,6 @@
-commerce_recurring.configuration:
-  title: 'Recurring'
-  route_name: 'commerce_recurring.configuration'
-  parent: 'commerce.configuration'
-  weight: -10
-
-entity.commerce_recurring_engine.collection:
-  title: 'Recurring engines'
-  route_name: 'entity.commerce_recurring_engine.collection'
-  parent: 'commerce_recurring.configuration'
-  description: 'Configure the recurring engines that manage recurring orders and subscriptions.'
+entity.commerce_billing_schedule.collection:
+  title: 'Billing schedules'
+  route_name: 'entity.commerce_billing_schedule.collection'
+  parent: 'commerce_payment.configuration'
+  description: 'Configure the available billing schedules'
 

@@ -1,18 +1,4 @@
 services:
-  plugin.manager.commerce_subscription_type:
-    class: Drupal\commerce_recurring\SubscriptionTypeManager
+  plugin.manager.commerce_billing_schedule:
+    class: Drupal\commerce_recurring\BillingScheduleManager
     parent: default_plugin_manager
-
-  plugin.manager.commerce_recurring_engine:
-    class: Drupal\commerce_recurring\RecurringEngineManager
-    parent: default_plugin_manager
-
-  plugin.manager.commerce_usage_type:
-    class: Drupal\commerce_recurring\UsageTypeManager
-    parent: default_plugin_manager
-  
-  commerce_recurring.storage.usage_record:
-    class: Drupal\commerce_recurring\UsageRecordDatabaseStorage
-    arguments: ['@database']
-    tags:
-      - { name: backend_overridable }

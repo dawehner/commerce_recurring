@@ -1,0 +1,21 @@
+commerce_recurring.commerce_billing_schedule.*:
+  type: config_entity
+  label: 'Billing schedule'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    display_label:
+      type: label
+      label: 'Display label'
+    plugin:
+      type: string
+      label: 'Plugin'
+    configuration:
+      type: commerce_recurring.commerce_billing_schedule.plugin.[%parent.plugin]
+
+commerce_recurring.commerce_billing_schedule.plugin.*:
+  type: mapping

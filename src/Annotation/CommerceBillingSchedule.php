@@ -5,15 +5,15 @@ namespace Drupal\commerce_recurring\Annotation;
 use Drupal\Component\Annotation\Plugin;
 
 /**
- * Defines the recurring engine plugin annotation object.
+ * Defines the billing schedule plugin annotation object.
  *
- * Plugin namespace: Plugin\Commerce\RecurringEngine.
+ * Plugin namespace: Plugin\Commerce\BillingSchedule.
  *
  * @see plugin_api
  *
  * @Annotation
  */
-class CommerceRecurringEngine extends Plugin {
+class CommerceBillingSchedule extends Plugin {
 
   /**
    * The plugin ID.
@@ -23,12 +23,13 @@ class CommerceRecurringEngine extends Plugin {
   public $id;
 
   /**
-   * The recurring engine label.
+   * The billing schedule label.
    *
    * @ingroup plugin_translatable
    *
    * @var \Drupal\Core\Annotation\Translation
    */
   public $label;
+
 }
 
