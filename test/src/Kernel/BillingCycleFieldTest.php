@@ -14,7 +14,7 @@ use Drupal\KernelTests\KernelTestBase;
  *
  * @group commerce_recurring
  */
-class BillingCycleField extends KernelTestBase {
+class BillingCycleFieldTest extends KernelTestBase {
 
   /**
    * {@inheritdoc}

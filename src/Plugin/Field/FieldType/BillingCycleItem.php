@@ -20,7 +20,7 @@ use Drupal\Core\TypedData\DataDefinition;
  *   default_formatter = "commerce_billing_cycle_default",
  * )
  */
-class BillingCycle extends FieldItemBase {
+class BillingCycleItem extends FieldItemBase {
 
   /**
    * {@inheritdoc}

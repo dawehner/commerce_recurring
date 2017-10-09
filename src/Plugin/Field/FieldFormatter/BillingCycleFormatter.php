@@ -20,14 +20,14 @@ use Drupal\Core\Field\FormatterBase;
  *   }
  * )
  */
-class BillingCycle extends FormatterBase {
+class BillingCycleFormatter extends FormatterBase {
 
   /**
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $build = [];
-    /** @var \Drupal\commerce_recurring\Plugin\Field\FieldType\BillingCycle $item */
+    /** @var \Drupal\commerce_recurring\Plugin\Field\FieldType\BillingCycleItem $item */
     foreach ($items as $item) {
       $build[] = [
         '#theme' => 'item_list',
