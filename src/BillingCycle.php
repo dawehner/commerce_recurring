@@ -22,6 +22,13 @@ class BillingCycle {
   protected $label;
 
   /**
+   * An increasing number for the billing cycle.
+   *
+   * @var int
+   */
+  protected $index;
+
+  /**
    * The time the billing cycle starts.
    *
    * @var \Drupal\Core\Datetime\DrupalDateTime
@@ -45,8 +52,9 @@ class BillingCycle {
    * @param \Drupal\Core\Datetime\DrupalDateTime $endDateTime
    *   The end time.
    */
-  public function __construct($label, DrupalDateTime $startDateTime, DrupalDateTime $endDateTime) {
+  public function __construct($label, $index, DrupalDateTime $startDateTime, DrupalDateTime $endDateTime) {
     $this->label = $label;
+    $this->index = $index;
     $this->startDateTime = $startDateTime;
     $this->endDateTime = $endDateTime;
   }
@@ -65,6 +73,23 @@ class BillingCycle {
    */
   public function setLabel($label) {
     $this->label = $label;
+    return $this;
+  }
+
+  /**
+   * @return int
+   */
+  public function getIndex() {
+    return $this->index;
+  }
+
+  /**
+   * @param int $index
+   *
+   * @return $this
+   */
+  public function setIndex($index) {
+    $this->index = $index;
     return $this;
   }
 
