@@ -4,7 +4,7 @@ commerce_recurring.commerce_billing_schedule.*:
   mapping:
     id:
       type: string
-      label: 'Machine-readable name'
+      label: 'ID'
     label:
       type: label
       label: 'Label'
