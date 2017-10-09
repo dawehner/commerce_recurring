@@ -19,3 +19,13 @@ commerce_recurring.commerce_billing_schedule.*:
 
 commerce_recurring.commerce_billing_schedule.plugin.*:
   type: mapping
+
+commerce_recurring.commerce_billing_schedule.plugin.fixed:
+  type: mapping
+  mapping:
+    number:
+      type: integer
+      label: Number
+    unit:
+      type: string
+      label: Unit
