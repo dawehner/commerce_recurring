@@ -20,7 +20,7 @@ interface BillingScheduleInterface extends ConfigurablePluginInterface, PluginFo
    *
    * @return \Drupal\commerce_recurring\BillingCycle
    */
-  public function getBillingCycle(AccountInterface $account, DrupalDateTime $startTime);
+  public function getFirstBillingCycle(AccountInterface $account, DrupalDateTime $startTime);
 
   /**
    * @param \Drupal\commerce_recurring\BillingCycle $cycle

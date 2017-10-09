@@ -19,7 +19,7 @@ class TestPlugin extends BillingScheduleBase {
   /**
    * {@inheritdoc}
    */
-  public function getBillingCycle(AccountInterface $account, DrupalDateTime $startTime) {
+  public function getFirstBillingCycle(AccountInterface $account, DrupalDateTime $startTime) {
     return new BillingCycle('My first billing cycle', new DrupalDateTime(), new DrupalDateTime());
   }
 
