@@ -28,13 +28,7 @@ class SubscribeableVariationTrait extends EntityTraitBase {
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'commerce_billing_schedule')
       ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
-        'weight' => 5,
-        'settings' => [
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'placeholder' => '',
-        ],
+        'type' => 'options_buttons',
       ])
       ->setDisplayConfigurable('form', TRUE);
 

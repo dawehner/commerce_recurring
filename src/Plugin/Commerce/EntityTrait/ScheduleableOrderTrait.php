@@ -27,13 +27,8 @@ class ScheduleableOrderTrait extends EntityTraitBase {
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'commerce_billing_schedule')
       ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
+        'type' => 'options_buttons',
         'weight' => 5,
-        'settings' => [
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'placeholder' => '',
-        ],
       ])
       ->setDisplayConfigurable('form', TRUE);
 
