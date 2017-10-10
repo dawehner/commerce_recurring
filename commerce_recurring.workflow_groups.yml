@@ -1,0 +1,6 @@
+commerce_subscription:
+  label: Subscription
+  entity_type: commerce_subscription
+#commerce_recurring_cycle:
+#  label: Recurring cycle
+#  entity_type: commerce_recurring_cycle
