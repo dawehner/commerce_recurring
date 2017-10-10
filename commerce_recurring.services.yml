@@ -3,6 +3,10 @@ services:
     class: \Drupal\commerce_recurring\EventSubscriber\PluginItemSubscriber
     tags:
       - { name: event_subscriber }
+  commerce_recurring.event_subscriber.create_subscriptions_from_order:
+    class: \Drupal\commerce_recurring\EventSubscriber\OrderPlacedCreateSubscriptionsSubscriber
+    tags:
+      - { name: event_subscriber }
   plugin.manager.commerce_billing_schedule:
     class: Drupal\commerce_recurring\BillingScheduleManager
     parent: default_plugin_manager
