@@ -2,3 +2,6 @@ services:
   plugin.manager.commerce_billing_schedule:
     class: Drupal\commerce_recurring\BillingScheduleManager
     parent: default_plugin_manager
+  plugin.manager.commerce_subscription_type:
+    class: Drupal\commerce_recurring\SubscriptionTypeManager
+    parent: default_plugin_manager
