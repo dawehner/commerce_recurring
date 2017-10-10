@@ -1,4 +1,8 @@
 services:
+  commerce_recurring.event_subscriber.plugin_item:
+    class: \Drupal\commerce_recurring\EventSubscriber\PluginItemSubscriber
+    tags:
+      - { name: event_subscriber }
   plugin.manager.commerce_billing_schedule:
     class: Drupal\commerce_recurring\BillingScheduleManager
     parent: default_plugin_manager
