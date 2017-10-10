@@ -68,13 +68,13 @@ class Rolling extends BillingScheduleBase {
   /**
    * {@inheritdoc}
    */
-  public function getFirstBillingCycle(DrupalDateTime $startTime) {
-    $startTime = clone $startTime;
+  public function getFirstBillingCycle(DrupalDateTime $start_time) {
+    $start_time = clone $start_time;
 
-    $endDate = clone $startTime;
-    $endDate = $this->modifyTime($endDate, $this->configuration['number'], $this->configuration['unit']);
+    $end_date = clone $start_time;
+    $end_date = $this->modifyTime($end_date, $this->configuration['number'], $this->configuration['unit']);
 
-    return new BillingCycle(0, $startTime, $endDate);
+    return new BillingCycle(0, $start_time, $end_date);
   }
 
   protected function modifyTime(DrupalDateTime $date, $number, $unit) {

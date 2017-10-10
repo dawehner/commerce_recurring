@@ -13,7 +13,7 @@ class NoopBillingSchedule extends BillingScheduleBase {
   /**
    * {@inheritdoc}
    */
-  public function getFirstBillingCycle(DrupalDateTime $startTime) {
+  public function getFirstBillingCycle(DrupalDateTime $start_time) {
     return new BillingCycle('todo', new DrupalDateTime(), new DrupalDateTime());
   }
 

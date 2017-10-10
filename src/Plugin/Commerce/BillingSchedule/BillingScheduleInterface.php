@@ -18,11 +18,11 @@ use Drupal\Core\Session\AccountInterface;
 interface BillingScheduleInterface extends ConfigurablePluginInterface, PluginFormInterface, PluginInspectionInterface {
 
   /**
-   * @param \Drupal\Core\Datetime\DrupalDateTime $startTime
+   * @param \Drupal\Core\Datetime\DrupalDateTime $start_time
    *
    * @return \Drupal\commerce_recurring\BillingCycle
    */
-  public function getFirstBillingCycle(DrupalDateTime $startTime);
+  public function getFirstBillingCycle(DrupalDateTime $start_time);
 
   /**
    * @param \Drupal\commerce_recurring\BillingCycle $cycle

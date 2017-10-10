@@ -68,60 +68,63 @@ class Fixed extends BillingScheduleBase {
   /**
    * {@inheritdoc}
    */
-  public function getFirstBillingCycle(DrupalDateTime $startTime) {
-    $startTime = clone $startTime;
+  public function getFirstBillingCycle(DrupalDateTime $start_time) {
+    $start_time = clone $start_time;
 
     switch ($this->configuration['unit']) {
       case 'hour':
-        $startTime->setTime($startTime->format('G'), 0);
+        $start_time->setTime($start_time->format('G'), 0);
         break;
       case 'day':
-        $startTime->modify('midnight');
+        $start_time->modify('midnight');
         break;
       case 'week':
-        $startTime->modify('monday');
+        $start_time->modify('monday');
         break;
       case 'month':
-        $startTime->modify('first day of this month');
+        $start_time->modify('first day of this month');
         break;
       case 'quarter':
-        $month = $startTime->format('n');
+        $month = $start_time->format('n');
 
         // @todo is there some better alternative out there?
         if ($month < 4) {
-          $startTime->modify('first day of january');
+          $start_time->modify('first day of january');
         }
         elseif ($month > 3 && $month < 7) {
-          $startTime->modify('first day of april');
+          $start_time->modify('first day of april');
         }
         elseif ($month > 6 && $month < 10) {
-          $startTime->modify('first day of july');
+          $start_time->modify('first day of july');
         }
         elseif ($month > 9) {
-          $startTime->modify('first day of october');
+          $start_time->modify('first day of october');
         }
 
         break;
       case 'half-year':
-        $month = $startTime->format('n');
+        $month = $start_time->format('n');
         if ($month < 7) {
-          $startTime->modify('first day of january');
+          $start_time->modify('first day of january');
         }
         else {
-          $startTime->modify('first day of july');
+          $start_time->modify('first day of july');
         }
         break;
       case 'year':
-        $startTime->modify('first day of january');
+        $start_time->modify('first day of january');
         break;
       default:
         throw new \Exception('You missed a case ...');
     }
 
-    $endDate = clone $startTime;
-    $endDate = $this->modifyTime($endDate, $this->configuration['number'], $this->configuration['unit']);
+    $end_date = clone $start_time;
+    $end_date = $this->modifyTime($end_date, $this->configuration['number'], $this->configuration['unit']);
 
-    return new BillingCycle(0, $startTime, $endDate);
+    // The 1 is subtracted to make sure that the billing cycle ends 1s before
+    // the next one starts (January 31st 23:59:59, for instance, with the
+    // next one starting on February 1st 00:00:00).
+    return new BillingCycle(0, $start_time, $end_date->modify('-1 second'));
   }
 
   protected function modifyTime(DrupalDateTime $date, $number, $unit) {
