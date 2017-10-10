@@ -58,5 +58,12 @@ abstract class SubscriptionTypeBase extends PluginBase implements SubscriptionTy
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function buildFieldDefinitions() {
+    return [];
+  }
+
 }
 

@@ -2,6 +2,8 @@
 
 namespace Drupal\commerce_recurring\Plugin\Commerce\SubscriptionType;
 
+use Drupal\commerce_recurring\BillingCycle;
+
 /**
  * @CommerceSubscriptionType(
  *   id = "license",
@@ -17,5 +19,13 @@ class License extends SubscriptionTypeBase {
     $fields = [];
     return $fields;
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function collectCharges(BillingCycle $billing_cycle) {
+    return [];
+  }
+
 
 }

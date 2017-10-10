@@ -85,7 +85,7 @@ class SubscriptionTest extends BrowserTestBase {
   }
 
   public function testCrudUiTest() {
-    $admin_user = $this->drupalCreateUser(['administer subscriptions', 'administer commerce_payment_method']);
+    $admin_user = $this->drupalCreateUser(['administer commerce_subscription', 'administer commerce_payment_method']);
     $this->drupalLogin($admin_user);
     $this->placeBlock('local_actions_block');
 

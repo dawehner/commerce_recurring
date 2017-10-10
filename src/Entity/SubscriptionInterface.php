@@ -2,15 +2,17 @@
 
 namespace Drupal\commerce_recurring\Entity;
 
+use Drupal\commerce_payment\Entity\PaymentMethodInterface;
 use Drupal\commerce_price\Price;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\state_machine\Plugin\Workflow\WorkflowState;
 use Drupal\user\EntityOwnerInterface;
+use Drupal\user\UserInterface;
 
 /**
  * Defines the interface for payments.
  */
-interface SubscriptionInterface extends ContentEntityInterface, EntityOwnerInterface {
+interface SubscriptionInterface extends ContentEntityInterface {
 
   /**
    * Gets the billing schedule.
@@ -26,6 +28,15 @@ interface SubscriptionInterface extends ContentEntityInterface, EntityOwnerInter
    *   The payment method entity, or null if unknown.
    */
   public function getPaymentMethod();
+
+  /**
+   * Sets the payment method
+   *
+   * @param \Drupal\commerce_payment\Entity\PaymentMethodInterface $payment_method
+   *
+   * @return $this
+   */
+  public function setPaymentMethod(PaymentMethodInterface $payment_method);
 
   /**
    * Gets the payment method ID.
@@ -60,22 +71,22 @@ interface SubscriptionInterface extends ContentEntityInterface, EntityOwnerInter
   public function getPurchasedEntityId();
 
   /**
-   * Gets the subscription amount.
+   * Gets the payment amount.
    *
-   * @return int
-   *   The subscription amount.
+   * @return \Drupal\commerce_price\Price|null
+   *   The payment amount, or NULL.
    */
   public function getAmount();
 
   /**
-   * Sets the subscription amount.
+   * Sets the payment amount.
    *
-   * @param int $amount
-   *   The subscription amount.
+   * @param \Drupal\commerce_price\Price $amount
+   *   The payment amount.
    *
    * @return $this
    */
-  public function setAmount($amount);
+  public function setAmount(Price $amount);
 
   /**
    * Gets the order state.
@@ -84,6 +95,34 @@ interface SubscriptionInterface extends ContentEntityInterface, EntityOwnerInter
    *   The order state.
    */
   public function getState();
+
+  /**
+   * Sets the customer user.
+   *
+   * @param \Drupal\user\UserInterface $account
+   *   The customer user entity.
+   *
+   * @return $this
+   */
+  public function setCustomer(UserInterface $account);
+
+  /**
+   * Gets the customer user ID.
+   *
+   * @return int|null
+   *   The customer user ID, or NULL in case the order is anonymous.
+   */
+  public function getCustomerId();
+
+  /**
+   * Sets the customer user ID.
+   *
+   * @param int $uid
+   *   The customer user ID.
+   *
+   * @return $this
+   */
+  public function setCustomerId($uid);
 
   /**
    * Gets the created timestamp.

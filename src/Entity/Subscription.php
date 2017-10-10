@@ -3,16 +3,15 @@
 namespace Drupal\commerce_recurring\Entity;
 
 
+use Drupal\commerce_payment\Entity\PaymentMethodInterface;
+use Drupal\commerce_price\Price;
 use Drupal\Core\Entity\ContentEntityBase;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\user\UserInterface;
 
 /**
  * Defines the subscription entity.
- *
- * @ingroup commerce_recurring
  *
  * @ContentEntityType(
  *   id = "commerce_subscription",
@@ -40,13 +39,12 @@ use Drupal\user\UserInterface;
  *     },
  *   },
  *   base_table = "commerce_subscription",
- *   admin_permission = "administer subscriptions",
+ *   admin_permission = "administer commerce_subscription",
  *   fieldable = TRUE,
  *   entity_keys = {
  *     "id" = "subscription_id",
  *     "bundle" = "type",
  *     "uuid" = "uuid",
- *     "uid" = "uid",
  *   },
  *   links = {
  *     "canonical" = "/admin/commerce/subscriptions/{commerce_subscription}",
@@ -63,14 +61,14 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
   /**
    * {@inheritdoc}
    */
-  public function getOwner() {
+  public function getCustomer() {
     return $this->get('uid')->entity;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setOwner(UserInterface $account) {
+  public function setCustomer(UserInterface $account) {
     $this->set('uid', $account->id());
     return $this;
   }
@@ -78,14 +76,14 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
   /**
    * {@inheritdoc}
    */
-  public function getOwnerId() {
+  public function getCustomerId() {
     return $this->get('uid')->target_id;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setOwnerId($uid) {
+  public function setCustomerId($uid) {
     $this->set('uid', $uid);
     return $this;
   }
@@ -102,6 +100,14 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
    */
   public function getPaymentMethod() {
     return $this->get('payment_method')->entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setPaymentMethod(PaymentMethodInterface $payment_method) {
+    $this->set('payment_method', $payment_method);
+    return $this;
   }
 
   /**
@@ -136,13 +142,15 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
    * {@inheritdoc}
    */
   public function getAmount() {
-    return $this->get('amount')->first()->value;
+    if (!$this->get('amount')->isEmpty()) {
+      return $this->get('amount')->first()->toPrice();
+    }
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setAmount($amount) {
+  public function setAmount(Price $amount) {
     $this->set('amount', $amount);
     return $this;
   }
@@ -197,22 +205,6 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
   public function setEndTime($timestamp) {
     $this->set('ended', $timestamp);
     return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function preSave(EntityStorageInterface $storage) {
-    parent::preSave($storage);
-
-    foreach (array_keys($this->getTranslationLanguages()) as $langcode) {
-      $translation = $this->getTranslation($langcode);
-
-      // If no owner has been set explicitly, make the anonymous user the owner.
-      if (!$translation->getOwner()) {
-        $translation->setOwnerId(0);
-      }
-    }
   }
 
   /**
@@ -277,16 +269,11 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['amount'] = BaseFieldDefinition::create('integer')
+    $fields['amount'] = BaseFieldDefinition::create('commerce_price')
       ->setLabel(t('Amount'))
-      ->setDescription(t('The subscription amount.'))
+      ->setDescription(t('The payment amount.'))
       ->setRequired(TRUE)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setDisplayOptions('form', [
-        'type' => 'number',
-        'weight' => 0,
-      ])
-      ->setDisplayConfigurable('form', TRUE);
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['state'] = BaseFieldDefinition::create('state')
       ->setLabel(t('State'))
