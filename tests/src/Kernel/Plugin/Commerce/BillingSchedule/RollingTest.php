@@ -132,38 +132,6 @@ class RollingTest extends KernelTestBase {
     $this->assertEquals('2017-12-09', $result2->getStartDateTime()->format('Y-m-d'));
     $this->assertEquals('2018-02-09', $result2->getEndDateTime()->format('Y-m-d'));
 
-    // 2 quarter
-    $fixed = new Rolling([
-      'number' => 2,
-      'unit' => 'quarter',
-    ], '', []);
-
-    $date = new DrupalDateTime('2017-10-09T15:07:12');
-    $result = $fixed->getFirstBillingCycle($date);
-    $result2 = $fixed->getNextBillingCycle($result);
-
-    $this->assertEquals('2017-10-09', $result->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2018-04-09', $result->getEndDateTime()->format('Y-m-d'));
-
-    $this->assertEquals('2018-04-09', $result2->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2018-10-09', $result2->getEndDateTime()->format('Y-m-d'));
-
-    // 1 half year
-    $fixed = new Rolling([
-      'number' => 1,
-      'unit' => 'half-year',
-    ], '', []);
-
-    $date = new DrupalDateTime('2017-10-09T15:07:12');
-    $result = $fixed->getFirstBillingCycle($date);
-    $result2 = $fixed->getNextBillingCycle($result);
-
-    $this->assertEquals('2017-10-09', $result->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2018-04-09', $result->getEndDateTime()->format('Y-m-d'));
-
-    $this->assertEquals('2018-04-09', $result2->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2018-10-09', $result2->getEndDateTime()->format('Y-m-d'));
-
     // 2 year
     $fixed = new Rolling([
       'number' => 2,

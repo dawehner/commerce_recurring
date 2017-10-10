@@ -31,11 +31,6 @@ abstract class IntervalBase extends BillingScheduleBase {
       '#type' => 'number',
       '#title' => $this->t('Number'),
       '#default_value' => $this->configuration['interval'],
-      '#states' => [
-        'invisible' => [
-          ':input[name="configuration[fixed][unit]"]' => [['value' => 'quarter'], ['value' => 'half-year']],
-        ],
-      ],
     ];
 
     $form['unit'] = [
@@ -46,8 +41,6 @@ abstract class IntervalBase extends BillingScheduleBase {
         'day' => 'Day',
         'week' => 'Week',
         'month' => 'Month',
-        'quarter' => 'Quarter',
-        'half-year' => 'Half-year',
         'year' => 'Year',
       ],
       '#default_value' => $this->configuration['interval'],
@@ -95,14 +88,6 @@ abstract class IntervalBase extends BillingScheduleBase {
         break;
       case 'month':
         $date->modify("+{$number} month");
-        break;
-      case 'quarter':
-        $months = $number * 3;
-        $date->modify("+{$months} month");
-        break;
-      case 'half-year':
-        $months = $number * 6;
-        $date->modify("+{$months} month");
         break;
       case 'year':
         $date->modify("+{$number} year");

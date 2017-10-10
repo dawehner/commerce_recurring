@@ -32,33 +32,6 @@ class Fixed extends IntervalBase {
       case 'month':
         $start_time->modify('first day of this month');
         break;
-      case 'quarter':
-        $month = $start_time->format('n');
-
-        // @todo is there some better alternative out there?
-        if ($month < 4) {
-          $start_time->modify('first day of january');
-        }
-        elseif ($month > 3 && $month < 7) {
-          $start_time->modify('first day of april');
-        }
-        elseif ($month > 6 && $month < 10) {
-          $start_time->modify('first day of july');
-        }
-        elseif ($month > 9) {
-          $start_time->modify('first day of october');
-        }
-
-        break;
-      case 'half-year':
-        $month = $start_time->format('n');
-        if ($month < 7) {
-          $start_time->modify('first day of january');
-        }
-        else {
-          $start_time->modify('first day of july');
-        }
-        break;
       case 'year':
         $start_time->modify('first day of january');
         break;
