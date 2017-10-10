@@ -227,8 +227,8 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
       ->setDisplayConfigurable('form', TRUE);
 
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Author'))
-      ->setDescription(t('The subscribed user.'))
+      ->setLabel(t('Customer'))
+      ->setDescription(t('The subscribed customer.'))
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
       ->setDefaultValueCallback('\Drupal\commerce_recurring\Entity\Subscription::getCurrentUserId')
