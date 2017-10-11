@@ -62,7 +62,6 @@ class OrderSubscriber implements EventSubscriberInterface {
           // @todo Maybe this should be the unit price?
           $subscription->setAmount($item->getTotalPrice());
 
-          // @todo Figure out the started and ended fields.
           $subscription->save();
         }
       }
