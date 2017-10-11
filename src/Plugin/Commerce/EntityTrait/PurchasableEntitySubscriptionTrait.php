@@ -7,15 +7,15 @@ use Drupal\commerce\Plugin\Commerce\EntityTrait\EntityTraitBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 
 /**
- * Provides a trait to make product variations subscribeable.
+ * Provides a trait to enable purchasing of subscriptions.
  *
  * @CommerceEntityTrait(
- *   id = "subscribeable_variation",
- *   label = @Translation("Subscribeable Variation"),
+ *   id = "purchasable_entity_subscription",
+ *   label = @Translation("Purchasable entity subscription"),
  *   entity_types = {"commerce_product_variation"}
  * )
  */
-class SubscribeableVariationTrait extends EntityTraitBase {
+class PurchasableEntitySubscriptionTrait extends EntityTraitBase {
 
   /**
    * {@inheritdoc}

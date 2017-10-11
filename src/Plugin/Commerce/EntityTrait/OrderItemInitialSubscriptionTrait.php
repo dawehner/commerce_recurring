@@ -9,12 +9,12 @@ use Drupal\commerce\Plugin\Commerce\EntityTrait\EntityTraitBase;
  * Provides the first entity trait.
  *
  * @CommerceEntityTrait(
- *   id = "scheduleable_order",
- *   label = @Translation("Scheduleable Order"),
- *   entity_types = {"commerce_order"}
+ *   id = "order_item_initial_subscription",
+ *   label = @Translation("Order item initial subscription"),
+ *   entity_types = {"commerce_order_item"}
  * )
  */
-class ScheduleableOrderTrait extends EntityTraitBase {
+class OrderItemInitialSubscriptionTrait extends EntityTraitBase {
 
   /**
    * {@inheritdoc}

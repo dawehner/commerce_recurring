@@ -3,9 +3,11 @@
 namespace Drupal\commerce_recurring\Entity;
 
 
+use Drupal\commerce\PurchasableEntityInterface;
 use Drupal\commerce_payment\Entity\PaymentMethodInterface;
 use Drupal\commerce_price\Price;
 use Drupal\Core\Entity\ContentEntityBase;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\user\UserInterface;
@@ -92,8 +94,17 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
    * {@inheritdoc}
    */
   public function getBillingSchedule() {
-    return $this->get('billing_schedule')->first()->entity;
+    return $this->get('billing_schedule')->entity;
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setBillingSchedule(BillingScheduleInterface $billing_schedule) {
+    $this->set('billing_schedule', $billing_schedule);
+    return $this;
+  }
+
 
   /**
    * {@inheritdoc}
@@ -141,6 +152,14 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
   /**
    * {@inheritdoc}
    */
+  public function setPurchasedEntity(PurchasableEntityInterface $purchased_entity) {
+    $this->set('purchased_entity', $purchased_entity);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getAmount() {
     if (!$this->get('amount')->isEmpty()) {
       return $this->get('amount')->first()->toPrice();
@@ -166,7 +185,7 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
    * {@inheritdoc}
    */
   public function getCreatedTime() {
-    return $this->get('created')->first()->value;
+    return $this->get('created')->value;
   }
 
   /**
@@ -181,7 +200,7 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
    * {@inheritdoc}
    */
   public function getStartTime() {
-    return $this->get('started')->first()->value;
+    return $this->get('started')->value;
   }
 
   /**
@@ -196,7 +215,7 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
    * {@inheritdoc}
    */
   public function getEndTime() {
-    return $this->get('ended')->first()->value;
+    return $this->get('ended')->value;
   }
 
   /**
@@ -205,6 +224,24 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
   public function setEndTime($timestamp) {
     $this->set('ended', $timestamp);
     return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function preSave(EntityStorageInterface $storage) {
+    parent::preSave($storage);
+
+    $state = $this->getState()->value;
+    $original_state = isset($this->original) ? $this->original->getState()->value : '';
+    if ($state === 'active' && $original_state !== 'active') {
+      if (empty($this->getStartTime())) {
+        $this->setStartTime(\Drupal::time()->getRequestTime());
+      }
+      if (empty($this->getEndTime())) {
+        $this->setEndTime(0);
+      }
+    }
   }
 
   /**

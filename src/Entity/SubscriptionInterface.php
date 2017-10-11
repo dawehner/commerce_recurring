@@ -2,6 +2,7 @@
 
 namespace Drupal\commerce_recurring\Entity;
 
+use Drupal\commerce\PurchasableEntityInterface;
 use Drupal\commerce_payment\Entity\PaymentMethodInterface;
 use Drupal\commerce_price\Price;
 use Drupal\Core\Entity\ContentEntityInterface;
@@ -20,6 +21,16 @@ interface SubscriptionInterface extends ContentEntityInterface {
    * @return \Drupal\commerce_recurring\Entity\BillingScheduleInterface
    */
   public function getBillingSchedule();
+
+  /**
+   * Sets the billing schedule.
+   *
+   * @param \Drupal\commerce_recurring\Entity\BillingScheduleInterface $billing_schedule
+   *   The billing schedule.
+   *
+   * @return $this
+   */
+  public function setBillingSchedule(BillingScheduleInterface $billing_schedule);
 
   /**
    * Gets the payment method.
@@ -61,6 +72,16 @@ interface SubscriptionInterface extends ContentEntityInterface {
    *   The purchased entity, or NULL.
    */
   public function getPurchasedEntity();
+
+  /**
+   * Sets the purchased entity.
+   *
+   * @param \Drupal\commerce\PurchasableEntityInterface $purchased_entity
+   *   The purchased entity.
+   *
+   * @return $this
+   */
+  public function setPurchasedEntity(PurchasableEntityInterface $purchased_entity);
 
   /**
    * Gets the purchased entity ID.

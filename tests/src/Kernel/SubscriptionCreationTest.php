@@ -99,11 +99,11 @@ class SubscriptionCreationTest extends CommerceKernelTestBase {
     ProductVariationType::create([
       'id' => 'with_subscriptions',
       'label' => 'Default',
-      'traits' => ['subscribeable_variation'],
+      'traits' => ['purchasable_entity_subscription'],
     ])->save();
 
     $trait_manager = \Drupal::service('plugin.manager.commerce_entity_trait');
-    $trait = $trait_manager->createInstance('subscribeable_variation');
+    $trait = $trait_manager->createInstance('purchasable_entity_subscription');
     $trait_manager->installTrait($trait, 'commerce_product_variation', 'with_subscriptions');
 
     $this->variation = $variation = ProductVariation::create([
@@ -138,13 +138,8 @@ class SubscriptionCreationTest extends CommerceKernelTestBase {
 
     OrderType::create([
       'id' => 'with_subscriptions',
-      'traits' => ['scheduleable_order'],
       'workflow'=> 'order_default',
     ])->save();
-
-    $trait_manager = \Drupal::service('plugin.manager.commerce_entity_trait');
-    $trait = $trait_manager->createInstance('scheduleable_order');
-    $trait_manager->installTrait($trait, 'commerce_order', 'with_subscriptions');
 
     OrderItemType::create([
       'id' => 'with_subscriptions',
