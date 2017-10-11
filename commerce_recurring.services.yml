@@ -5,6 +5,7 @@ services:
       - { name: event_subscriber }
   commerce_recurring.event_subscriber.create_subscriptions_from_order:
     class: \Drupal\commerce_recurring\EventSubscriber\OrderPlacedCreateSubscriptionsSubscriber
+    arguments: ['@entity_type.manager']
     tags:
       - { name: event_subscriber }
   plugin.manager.commerce_billing_schedule:
