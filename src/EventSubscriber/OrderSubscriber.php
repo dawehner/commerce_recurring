@@ -31,6 +31,14 @@ class OrderSubscriber implements EventSubscriberInterface {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public static function getSubscribedEvents() {
+    $events['commerce_order.place.pre_transition'] = 'onPlaceTransition';
+    return $events;
+  }
+
+  /**
    * Create subscription when orders with billing schedules attached are placed.
    *
    * @param \Drupal\state_machine\Event\WorkflowTransitionEvent $event
@@ -66,14 +74,6 @@ class OrderSubscriber implements EventSubscriberInterface {
         }
       }
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function getSubscribedEvents() {
-    $events['commerce_order.place.pre_transition'] = 'onPlaceTransition';
-    return $events;
   }
 
 }
