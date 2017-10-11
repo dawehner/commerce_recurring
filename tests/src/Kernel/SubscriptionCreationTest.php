@@ -172,6 +172,7 @@ class SubscriptionCreationTest extends CommerceKernelTestBase {
     $order = Order::create([
       'type' => 'with_subscriptions',
       'state' => 'draft',
+      'payment_method' => $this->paymentMethod,
     ]);
     $order->setCustomer($currentUser);
     $order->setStore($this->store);
