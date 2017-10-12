@@ -3,6 +3,7 @@
 namespace Drupal\commerce_recurring\Plugin\Commerce\SubscriptionType;
 
 use Drupal\commerce_recurring\BillingCycle;
+use Drupal\commerce_recurring\Entity\SubscriptionInterface;
 
 /**
  * @CommerceSubscriptionType(
@@ -23,7 +24,7 @@ class License extends SubscriptionTypeBase {
   /**
    * {@inheritdoc}
    */
-  public function collectCharges(BillingCycle $billing_cycle) {
+  public function collectCharges(BillingCycle $billing_cycle, SubscriptionInterface $subscription) {
     return [];
   }
 

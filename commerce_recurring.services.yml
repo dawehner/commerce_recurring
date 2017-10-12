@@ -8,6 +8,11 @@ services:
     arguments: ['@entity_type.manager']
     tags:
       - { name: event_subscriber }
+  commerce_recurring.event_subscriber.subscription_subscriber:
+    class: \Drupal\commerce_recurring\EventSubscriber\SubscriptionSubscriber
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: event_subscriber }
   plugin.manager.commerce_billing_schedule:
     class: Drupal\commerce_recurring\BillingScheduleManager
     parent: default_plugin_manager

@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   module:
-    - commerce_order
+    - commerce_recurring
 id: commerce_order.order_subscriptions
 field_name: order_subscriptions
-entity_type: commerce_subscription
+entity_type: commerce_order
 type: entity_reference
 settings:
   target_type: commerce_subscription
@@ -14,6 +14,7 @@ locked: true
 cardinality: -1
 translatable: false
 indexes: {  }
+settings: {  }
 persist_with_no_fields: false
 custom_storage: false
 

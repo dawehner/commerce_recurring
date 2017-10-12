@@ -63,6 +63,14 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
   /**
    * {@inheritdoc}
    */
+  public function getType() {
+    $payment_type_manager = \Drupal::service('plugin.manager.commerce_subscription_type');
+    return $payment_type_manager->createInstance($this->bundle());
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCustomer() {
     return $this->get('uid')->entity;
   }
@@ -227,6 +235,46 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
   }
 
   /**
+   * Default value callback for 'uid' base field definition.
+   *
+   * @see ::baseFieldDefinitions()
+   *
+   * @return array
+   *   An array of default values.
+   */
+  public static function getCurrentUserId() {
+    return [\Drupal::currentUser()->id()];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getStores() {
+    return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getOrderItemTypeId() {
+    return 'recurring';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getOrderItemTitle() {
+    return 'Recurring order item';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPrice() {
+    return $this->getAmount();
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function preSave(EntityStorageInterface $storage) {
@@ -369,17 +417,4 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
 
     return $fields;
   }
-
-  /**
-   * Default value callback for 'uid' base field definition.
-   *
-   * @see ::baseFieldDefinitions()
-   *
-   * @return array
-   *   An array of default values.
-   */
-  public static function getCurrentUserId() {
-    return [\Drupal::currentUser()->id()];
-  }
-
 }

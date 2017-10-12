@@ -19,14 +19,18 @@ class TestPlugin extends BillingScheduleBase {
    * {@inheritdoc}
    */
   public function getFirstBillingCycle(DrupalDateTime $start_time) {
-    return new BillingCycle('My first billing cycle', new DrupalDateTime(), new DrupalDateTime());
+    $end = clone $start_time;
+    $end->modify('+50 seconds');
+    return new BillingCycle('My first billing cycle', $start_time, $end);
   }
 
   /**
    * {@inheritdoc}
    */
   public function getNextBillingCycle(BillingCycle $cycle) {
-    return new BillingCycle('My first billing cycle', new DrupalDateTime(), new DrupalDateTime());
+    $end = clone $cycle->getEndDateTime();
+    $end->modify('+50 seconds');
+    return new BillingCycle('My first billing cycle', $cycle->getEndDateTime(), $end);
   }
 
   /**
