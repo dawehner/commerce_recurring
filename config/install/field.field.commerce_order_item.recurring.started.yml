@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.commerce_order_item.end
-id: commerce_order_item.recurring.end
-field_name: end
+    - field.storage.commerce_order_item.started
+id: commerce_order_item.recurring.started
+field_name: started
 entity_type: commerce_order_item
 bundle: recurring
-label: 'End date'
+label: 'Start date'
 description: ''
 required: true
 translatable: false
+settings: {  }
 default_value: {  }
 default_value_callback: ''
-settings: {  }
 field_type: timestamp

@@ -1,8 +1,8 @@
 langcode: en
 status: true
 dependencies: {}
-id: commerce_order_item.start
-field_name: start
+id: commerce_order_item.started
+field_name: started
 entity_type: commerce_order_item
 type: timestamp
 settings: { }

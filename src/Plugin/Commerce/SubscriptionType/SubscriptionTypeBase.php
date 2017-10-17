@@ -99,8 +99,8 @@ abstract class SubscriptionTypeBase extends PluginBase implements SubscriptionTy
       $order_item = $order_item_storage->createFromPurchasableEntity($subscription, [
         'type' => 'recurring',
         'billing_schedule' => $subscription->getBillingSchedule(),
-        'start' => $initial_billing_cycle->getStartDateTime()->format('U'),
-        'end' => $initial_billing_cycle->getEndDateTime()->format('U'),
+        'started' => $initial_billing_cycle->getStartDateTime()->format('U'),
+        'ended' => $initial_billing_cycle->getEndDateTime()->format('U'),
         'quantity' => 1,
         'unit_price' => $charge->getAmount(),
       ]);
