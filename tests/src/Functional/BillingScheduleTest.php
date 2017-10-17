@@ -12,7 +12,12 @@ class BillingScheduleTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['commerce_recurring', 'commerce_recurring_test', 'block'];
+  public static $modules = [
+    'commerce_recurring',
+    'commerce_recurring_test',
+    'block',
+    'commerce_product',
+  ];
 
   public function testCrudUiTest() {
     $admin_user = $this->drupalCreateUser(['administer commerce_billing_schedules']);

@@ -4,6 +4,7 @@ namespace Drupal\Tests\commerce_recurring\Kernel;
 
 use Drupal\commerce_payment\Entity\PaymentGateway;
 use Drupal\commerce_payment\Entity\PaymentMethod;
+use Drupal\commerce_price\Price;
 use Drupal\commerce_product\Entity\ProductVariation;
 use Drupal\commerce_product\Entity\ProductVariationType;
 use Drupal\commerce_recurring\Entity\BillingSchedule;
@@ -20,7 +21,19 @@ class SubscriptionTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['commerce', 'commerce_recurring', 'state_machine', 'user', 'commerce_payment', 'commerce_recurring_test', 'commerce_product', 'entity_reference_revisions', 'profile', 'commerce_payment_example', 'commerce_price'];
+  public static $modules = [
+    'commerce',
+    'commerce_payment',
+    'commerce_payment_example',
+    'commerce_price',
+    'commerce_product',
+    'commerce_recurring',
+    'commerce_recurring_test',
+    'entity_reference_revisions',
+    'profile',
+    'state_machine',
+    'user',
+  ];
 
   /**
    * {@inheritdoc}
@@ -38,7 +51,7 @@ class SubscriptionTest extends KernelTestBase {
     /** @var \Drupal\commerce_recurring\SubscriptionTypeManager $subscription_type_manager */
     $subscription_type_manager = \Drupal::service('plugin.manager.commerce_subscription_type');
     $definitions = $subscription_type_manager->getDefinitions();
-    $this->assertArrayHasKey('product', $definitions);
+    $this->assertArrayHasKey('license', $definitions);
   }
 
   public function testCrudEntity() {
@@ -88,7 +101,7 @@ class SubscriptionTest extends KernelTestBase {
       'uid' => 0,
       'payment_method' => $payment_method,
       'purchased_entity' => $variation,
-      'amount' => 2,
+      'amount' => new Price('2', 'USD'),
       'state' => 'active',
       'created' => 1507642328,
       'started' => 1507642328 + 10,
@@ -104,19 +117,19 @@ class SubscriptionTest extends KernelTestBase {
     $this->assertTrue($subscription->hasPurchasedEntity());
     $this->assertEquals($variation->id(), $subscription->getPurchasedEntity()->id());
     $this->assertEquals($variation->id(), $subscription->getPurchasedEntityId());
-    $this->assertEquals(2, $subscription->getAmount());
+    $this->assertEquals(2, $subscription->getAmount()->getNumber());
     $this->assertEquals(1507642328, $subscription->getCreatedTime());
     $this->assertEquals(1507642328 + 10, $subscription->getStartTime());
     $this->assertEquals(1507642328 + 50, $subscription->getEndTime());
 
     // Modify some values.
-    $subscription->setAmount(3);
+    $subscription->setAmount(new Price('3', 'USD'));
     $subscription->setStartTime(12345);
     $subscription->setEndTime(123456);
     $subscription->save();
 
     $subscription = Subscription::load($subscription->id());
-    $this->assertEquals(3, $subscription->getAmount());
+    $this->assertEquals(3, $subscription->getAmount()->getNumber());
     $this->assertEquals(12345, $subscription->getStartTime());
     $this->assertEquals(123456, $subscription->getEndTime());
   }
