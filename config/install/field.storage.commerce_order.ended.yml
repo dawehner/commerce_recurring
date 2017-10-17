@@ -1,9 +1,9 @@
 langcode: en
 status: true
 dependencies: {}
-id: commerce_order_item.started
-field_name: started
-entity_type: commerce_order_item
+id: commerce_order.ended
+field_name: ended
+entity_type: commerce_order
 type: timestamp
 settings: { }
 locked: true

@@ -49,8 +49,8 @@ class SubscriptionActivateTest extends CommerceRecurringKernelTestBase {
     $this->assertEquals(2, $order_item->getTotalPrice()->getNumber());
     $this->assertEquals('commerce_subscription', $order_item->getPurchasedEntity()->getEntityTypeId());
     $this->assertEquals($subscription->id(), $order_item->getPurchasedEntity()->id());
-    $this->assertEquals($subscription->get('started')->value, $order_item->get('start')->value);
-    $this->assertEquals($subscription->get('started')->value + 50, $order_item->get('end')->value);
+    $this->assertEquals($subscription->get('started')->value, $order->get('started')->value);
+    $this->assertEquals($subscription->get('started')->value + 50, $order->get('ended')->value);
   }
 
 }

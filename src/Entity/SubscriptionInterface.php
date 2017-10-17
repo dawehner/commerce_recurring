@@ -124,6 +124,14 @@ interface SubscriptionInterface extends ContentEntityInterface, PurchasableEntit
   public function getState();
 
   /**
+   * Gets the customer user.
+   *
+   * @return \Drupal\user\UserInterface
+   *   The customer user entity.
+   */
+  public function getCustomer();
+
+  /**
    * Sets the customer user.
    *
    * @param \Drupal\user\UserInterface $account
