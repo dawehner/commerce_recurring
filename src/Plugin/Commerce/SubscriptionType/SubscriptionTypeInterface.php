@@ -3,6 +3,7 @@
 namespace Drupal\commerce_recurring\Plugin\Commerce\SubscriptionType;
 
 use Drupal\commerce\BundlePluginInterface;
+use Drupal\commerce_order\Entity\OrderInterface;
 use Drupal\commerce_recurring\BillingCycle;
 use Drupal\commerce_recurring\Entity\SubscriptionInterface;
 use Drupal\Component\Plugin\ConfigurablePluginInterface;
@@ -32,7 +33,7 @@ interface SubscriptionTypeInterface extends BundlePluginInterface, ConfigurableP
    */
   public function createRecurringOrder(SubscriptionInterface $subscription);
 
-  public function refreshRecurringOrder(SubscriptionInterface $subscription);
+  public function refreshRecurringOrder(SubscriptionInterface $subscription, OrderInterface $previous_recurring_order);
 
 }
 

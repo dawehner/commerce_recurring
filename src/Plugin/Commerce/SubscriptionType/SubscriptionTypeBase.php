@@ -3,7 +3,8 @@
 namespace Drupal\commerce_recurring\Plugin\Commerce\SubscriptionType;
 
 use Drupal\commerce_order\Entity\Order;
-use Drupal\commerce_order\Entity\OrderItem;
+use Drupal\commerce_order\Entity\OrderInterface;
+use Drupal\commerce_recurring\BillingCycle;
 use Drupal\commerce_recurring\Entity\SubscriptionInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
@@ -71,6 +72,8 @@ abstract class SubscriptionTypeBase extends PluginBase implements SubscriptionTy
 
   /**
    * {@inheritdoc}
+   *
+   * @todo Should we inform the billing schedule plugin for close and renewing?
    */
   public function createRecurringOrder(SubscriptionInterface $subscription) {
     /** @var \Drupal\commerce_order\OrderItemStorageInterface $order_item_storage */
@@ -92,6 +95,13 @@ abstract class SubscriptionTypeBase extends PluginBase implements SubscriptionTy
       'started' => $initial_billing_cycle->getStartDateTime()->format('U'),
       'ended' => $initial_billing_cycle->getEndDateTime()->format('U'),
     ]);
+
+    $start_time = DrupalDateTime::createFromTimestamp($subscription->getStartTime());
+    $initial_billing_cycle = $subscription->getBillingSchedule()
+      ->getPlugin()
+      ->getFirstBillingCycle($start_time);
+
+    $initial_charges = $subscription->getType()->collectCharges($initial_billing_cycle, $subscription);
 
     foreach ($initial_charges as $charge) {
       // Create the initial order item.
@@ -117,23 +127,35 @@ abstract class SubscriptionTypeBase extends PluginBase implements SubscriptionTy
   /**
    * {@inheritdoc}
    */
-  public function refreshRecurringOrder(SubscriptionInterface $subscription) {
-    // Refresh an existing recurring order.
-
-    // Try to find an order item which has this subscription attached.
+  public function refreshRecurringOrder(SubscriptionInterface $subscription, OrderInterface $previous_recurring_order) {
     /** @var \Drupal\commerce_order\OrderItemStorageInterface $order_item_storage */
-    $order_item_storage = \Drupal::entityTypeManager()
-      ->getStorage('commerce_order_item');
-    $result = $order_item_storage->getQuery()
-      ->condition('type', 'recurring')
-      ->condition('purchased_entity', $subscription->id())
-      // Find the latest order item
-      ->sort('order_item_id', 'DESC')
-      ->pager(1)
-      ->execute();
-    if ($result && $order_item = OrderItem::load(reset($result))) {
-      // @todo Implement the current refreshing logic ...
+    $order_item_storage = \Drupal::entityTypeManager()->getStorage('commerce_order_item');
+
+    $current_billing_cycle = new BillingCycle(0, DrupalDateTime::createFromTimestamp($previous_recurring_order->get('started')->value), DrupalDateTime::createFromTimestamp($previous_recurring_order->get('ended')->value));
+    $next_billing_cycle = $subscription->getBillingSchedule()->getPlugin()->getNextBillingCycle($current_billing_cycle);
+
+    // Create the order for the next billing cycles.
+    $next_order = Order::create([
+      'type' => 'recurring',
+      'uid' => $subscription->getCustomerId(),
+      'store_id' => $previous_recurring_order->getStore(),
+      'started' => $next_billing_cycle->getStartDateTime()->format('U'),
+      'ended' => $next_billing_cycle->getEndDateTime()->format('U'),
+    ]);
+
+    $charges = $this->collectCharges($next_billing_cycle, $subscription);
+    foreach ($charges as $charge) {
+      $order_item = $order_item_storage->createFromPurchasableEntity($subscription, [
+        'type' => 'recurring',
+        'billing_schedule' => $subscription->getBillingSchedule(),
+        'quantity' => 1,
+        'unit_price' => $charge->getAmount(),
+      ]);
+      $order_item->save();
+      $next_order->addItem($order_item);
     }
+    $next_order->save();
+    return $next_order;
   }
 
 }
