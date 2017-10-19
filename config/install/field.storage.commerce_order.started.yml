@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies: {}
+id: commerce_order.started
+field_name: started
+entity_type: commerce_order
+type: timestamp
+settings: { }
+locked: true
+cardinality: -1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
+

@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.commerce_order.started
+id: commerce_order.recurring.started
+field_name: started
+entity_type: commerce_order
+bundle: recurring
+label: 'Start date'
+description: ''
+required: true
+translatable: false
+settings: {  }
+default_value: {  }
+default_value_callback: ''
+field_type: timestamp

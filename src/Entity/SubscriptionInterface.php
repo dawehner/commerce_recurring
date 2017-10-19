@@ -6,14 +6,20 @@ use Drupal\commerce\PurchasableEntityInterface;
 use Drupal\commerce_payment\Entity\PaymentMethodInterface;
 use Drupal\commerce_price\Price;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\state_machine\Plugin\Workflow\WorkflowState;
-use Drupal\user\EntityOwnerInterface;
 use Drupal\user\UserInterface;
 
 /**
  * Defines the interface for payments.
  */
-interface SubscriptionInterface extends ContentEntityInterface {
+interface SubscriptionInterface extends ContentEntityInterface, PurchasableEntityInterface {
+
+  /**
+   * Gets the subscription type.
+   *
+   * @return \Drupal\commerce_recurring\Plugin\Commerce\SubscriptionType\SubscriptionTypeInterface
+   *   The subscription type.
+   */
+  public function getType();
 
   /**
    * Gets the billing schedule.
@@ -116,6 +122,14 @@ interface SubscriptionInterface extends ContentEntityInterface {
    *   The order state.
    */
   public function getState();
+
+  /**
+   * Gets the customer user.
+   *
+   * @return \Drupal\user\UserInterface
+   *   The customer user entity.
+   */
+  public function getCustomer();
 
   /**
    * Sets the customer user.
