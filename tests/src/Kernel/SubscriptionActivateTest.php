@@ -12,7 +12,7 @@ class SubscriptionActivateTest extends CommerceRecurringKernelTestBase {
     \Drupal::currentUser()->setAccount($currentUser);
 
     $subscription = Subscription::create([
-      'type' => 'repeated_order',
+      'type' => 'license',
       'billing_schedule' => $this->billingSchedule,
       'uid' => $currentUser,
       'payment_method' => $this->paymentMethod,
@@ -51,6 +51,8 @@ class SubscriptionActivateTest extends CommerceRecurringKernelTestBase {
     $this->assertEquals($subscription->id(), $order_item->getPurchasedEntity()->id());
     $this->assertEquals($subscription->get('started')->value, $order->get('started')->value);
     $this->assertEquals($subscription->get('started')->value + 50, $order->get('ended')->value);
+    $this->assertEquals($subscription->get('started')->value, $order_item->get('started')->value);
+    $this->assertEquals($subscription->get('started')->value + 50, $order_item->get('ended')->value);
   }
 
 }

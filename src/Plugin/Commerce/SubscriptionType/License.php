@@ -3,6 +3,7 @@
 namespace Drupal\commerce_recurring\Plugin\Commerce\SubscriptionType;
 
 use Drupal\commerce_recurring\BillingCycle;
+use Drupal\commerce_recurring\Charge;
 use Drupal\commerce_recurring\Entity\SubscriptionInterface;
 
 /**
@@ -25,8 +26,7 @@ class License extends SubscriptionTypeBase {
    * {@inheritdoc}
    */
   public function collectCharges(BillingCycle $billing_cycle, SubscriptionInterface $subscription) {
-    return [];
+    return [new Charge($subscription->getAmount(), 'Label todo', $billing_cycle->getStartDateTime(), $billing_cycle->getEndDateTime())];
   }
-
 
 }

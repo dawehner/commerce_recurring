@@ -4,8 +4,6 @@ namespace Drupal\commerce_recurring\Plugin\Commerce\SubscriptionType;
 
 use Drupal\commerce_order\Entity\Order;
 use Drupal\commerce_order\Entity\OrderItem;
-use Drupal\commerce_price\Price;
-use Drupal\commerce_recurring\Charge;
 use Drupal\commerce_recurring\Entity\SubscriptionInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
@@ -100,9 +98,12 @@ abstract class SubscriptionTypeBase extends PluginBase implements SubscriptionTy
       // @todo Take into account prepaid vs. postpaid
       $order_item = $order_item_storage->createFromPurchasableEntity($subscription, [
         'type' => 'recurring',
+        'title' => $charge->getLabel(),
         'billing_schedule' => $subscription->getBillingSchedule(),
         'quantity' => 1,
         'unit_price' => $charge->getAmount(),
+        'started' => $charge->getStartTime()->format('U'),
+        'ended' => $charge->getEndTime()->format('U'),
       ]);
 
       $order_item->save();
