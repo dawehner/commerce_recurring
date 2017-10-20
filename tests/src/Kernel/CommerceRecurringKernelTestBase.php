@@ -6,11 +6,13 @@ use Drupal\commerce_order\Entity\OrderItemType;
 use Drupal\commerce_order\Entity\OrderType;
 use Drupal\commerce_payment\Entity\PaymentGateway;
 use Drupal\commerce_payment\Entity\PaymentMethod;
+use Drupal\commerce_price\Price;
 use Drupal\commerce_product\Entity\Product;
 use Drupal\commerce_product\Entity\ProductType;
 use Drupal\commerce_product\Entity\ProductVariation;
 use Drupal\commerce_product\Entity\ProductVariationType;
 use Drupal\commerce_recurring\Entity\BillingSchedule;
+use Drupal\commerce_recurring\Entity\Subscription;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\commerce\Kernel\CommerceKernelTestBase;
@@ -82,6 +84,7 @@ class CommerceRecurringKernelTestBase extends CommerceKernelTestBase {
     $this->installEntitySchema('commerce_subscription');
     $this->installEntitySchema('user');
     $this->installSchema('advancedqueue', 'advancedqueue');
+    $this->installSchema('commerce_recurring', 'commerce_subscription_change');
     $this->installConfig('entity');
     $this->installConfig('commerce_product');
     $this->installConfig('commerce_order');
@@ -170,4 +173,42 @@ class CommerceRecurringKernelTestBase extends CommerceKernelTestBase {
       'bundle' => 'with_subscriptions',
     ])->save();
   }
+
+  protected function createBasicSubscriptionAndOrder() {
+    // Create a recurring order by creating a subscription.
+    $currentUser = $this->createUser([], []);
+    \Drupal::currentUser()->setAccount($currentUser);
+
+    $subscription = Subscription::create([
+      'type' => 'license',
+      'billing_schedule' => $this->billingSchedule,
+      'uid' => $currentUser,
+      'payment_method' => $this->paymentMethod,
+      'purchased_entity' => $this->variation,
+      'amount' => new Price('2', 'USD'),
+      'state' => 'pending',
+      'started' => \Drupal::time()->getRequestTime() - 5,
+      'ended' => \Drupal::time()->getRequestTime() + 1000,
+    ]);
+    $subscription->save();
+
+    $order_storage = \Drupal::entityTypeManager()->getStorage('commerce_order');
+    $result = $order_storage->getQuery()
+      ->condition('type', 'recurring')
+      ->pager(1)
+      ->execute();
+    $this->assertEmpty($result);
+
+    $subscription->getState()->applyTransition($subscription->getState()->getTransitions()['activate']);
+    $subscription->save();
+
+    $orders = $order_storage->loadMultiple($order_storage->getQuery()
+      ->condition('type', 'recurring')
+      ->execute());
+    $this->assertCount(1, $orders);
+    $order = reset($orders);
+
+    return [$subscription, $order];
+  }
+
 }

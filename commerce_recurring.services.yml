@@ -16,6 +16,10 @@ services:
     tags:
       - { name: event_subscriber }
 
+  commerce_recurring.subscription_changes.manager:
+    class: \Drupal\commerce_recurring\SubscriptionChange\SubscriptionChangeManager
+    arguments : ['@database', '@datetime.time']
+
   plugin.manager.commerce_billing_schedule:
     class: Drupal\commerce_recurring\BillingScheduleManager
     parent: default_plugin_manager

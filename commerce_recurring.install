@@ -4,7 +4,40 @@
  * Implements hook_schema().
  */
 function commerce_recurring_schema() {
-  $schema['commerce_recurring_usage'] = [
+  $schema['commerce_subscription_change'] = [
+    'description' => 'Subscription changes',
+    'fields' => [
+      'change_id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'subscription_id' => [
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'field_name' => [
+        'type' => 'varchar_ascii',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'value' => [
+        'type' => 'varchar_ascii',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['change_id'],
+  ];
+
+  /*$schema['commerce_recurring_usage'] = [
     'description' => 'Tracks subscription usage.',
     'fields' => [
       'usage_id' => [
@@ -48,5 +81,6 @@ function commerce_recurring_schema() {
       'combined' => ['usage_type', 'subscription_id'],
       'timing' => ['start', 'end'],
     ],
-  ];
+  ];*/
+  return $schema;
 }

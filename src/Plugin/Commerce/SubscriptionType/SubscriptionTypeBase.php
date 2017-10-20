@@ -6,6 +6,7 @@ use Drupal\commerce_order\Entity\Order;
 use Drupal\commerce_order\Entity\OrderInterface;
 use Drupal\commerce_recurring\BillingCycle;
 use Drupal\commerce_recurring\Entity\SubscriptionInterface;
+use Drupal\commerce_recurring\SubscriptionChange\SubscriptionChangeManager;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\PluginBase;
@@ -14,6 +15,19 @@ use Drupal\Core\Plugin\PluginBase;
  * Defines the subscription base class.
  */
 abstract class SubscriptionTypeBase extends PluginBase implements SubscriptionTypeInterface {
+
+  /**
+   * The schedule change manager.
+   *
+   * @var \Drupal\commerce_recurring\SubscriptionChange\SubscriptionChangeManager
+   */
+  protected $subscriptionChangeManager;
+
+  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+
+    $this->subscriptionChangeManager = new SubscriptionChangeManager();
+  }
 
   /**
    * {@inheritdoc}
@@ -124,9 +138,22 @@ abstract class SubscriptionTypeBase extends PluginBase implements SubscriptionTy
   }
 
   /**
+   * Apply all subscription changes.
+   *
+   * @param \Drupal\commerce_recurring\Entity\SubscriptionInterface $subscription
+   */
+  protected function applyChanges(SubscriptionInterface $subscription) {
+    if ($changes = $this->subscriptionChangeManager->getChangesPerSubscription($subscription)) {
+      $this->subscriptionChangeManager->applyChanges($subscription, $changes);
+    }
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function renewRecurringOrder(SubscriptionInterface $subscription, OrderInterface $previous_recurring_order) {
+    $this->applyChanges($subscription);
+
     /** @var \Drupal\commerce_order\OrderItemStorageInterface $order_item_storage */
     $order_item_storage = \Drupal::entityTypeManager()->getStorage('commerce_order_item');
 
