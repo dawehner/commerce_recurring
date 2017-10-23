@@ -20,16 +20,13 @@ class RecurringOrderRefreshTest extends CommerceRecurringKernelTestBase {
     \Drupal::getContainer()->set('datetime.time', new CustomTime(\Drupal::time()->getRequestTime()));
   }
 
-  /**
-   * Tests the logic to fill up the recurring order queue for refresh and close.
-   */
-  public function testRecurringOrderRefreshQueue() {
+  protected function createBasicSubscriptionAndOrder() {
     // Create a recurring order by creating a subscription.
     $currentUser = $this->createUser([], []);
     \Drupal::currentUser()->setAccount($currentUser);
 
     $subscription = Subscription::create([
-      'type' => 'repeated_order',
+      'type' => 'license',
       'billing_schedule' => $this->billingSchedule,
       'uid' => $currentUser,
       'payment_method' => $this->paymentMethod,
@@ -57,6 +54,15 @@ class RecurringOrderRefreshTest extends CommerceRecurringKernelTestBase {
     $this->assertCount(1, $orders);
     $order = reset($orders);
 
+    return [$subscription, $order];
+  }
+
+  /**
+   * Tests the logic to fill up the recurring order queue for refresh and close.
+   */
+  public function testRecurringOrderRefreshQueue() {
+    list($subscription, $order) = $this->createBasicSubscriptionAndOrder();
+
     // Ensure the refresh queue is empty.
     $this->assertEquals(0, \Drupal::queue('commerce_recurring_refresh')->numberOfItems());
 
@@ -77,32 +83,7 @@ class RecurringOrderRefreshTest extends CommerceRecurringKernelTestBase {
    * Tests the actual logic of recurring a recurring order.
    */
   public function testRecurringOrderRefreshLogic() {
-    // Create a recurring order by creating a subscription.
-    $currentUser = $this->createUser();
-    \Drupal::currentUser()->setAccount($currentUser);
-
-    $subscription = Subscription::create([
-      'type' => 'repeated_order',
-      'billing_schedule' => $this->billingSchedule,
-      'uid' => $currentUser,
-      'payment_method' => $this->paymentMethod,
-      'purchased_entity' => $this->variation,
-      'amount' => new Price('2', 'USD'),
-      'state' => 'pending',
-      'started' => \Drupal::time()->getRequestTime() - 5,
-      'ended' => \Drupal::time()->getRequestTime() + 1000,
-    ]);
-    $subscription->save();
-
-    $subscription->getState()->applyTransition($subscription->getState()->getTransitions()['activate']);
-    $subscription->save();
-
-    $order_storage = \Drupal::entityTypeManager()->getStorage('commerce_order');
-    $orders = $order_storage->loadMultiple($order_storage->getQuery()
-      ->condition('type', 'recurring')
-      ->execute());
-    $this->assertCount(1, $orders);
-    $order = reset($orders);
+    list($subscription, $order) = $this->createBasicSubscriptionAndOrder();
 
     /** @var \Drupal\commerce_order\Entity\OrderInterface $next_order */
     $next_order = $subscription->getType()->refreshRecurringOrder($subscription, $order);
