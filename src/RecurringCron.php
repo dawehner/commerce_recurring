@@ -29,11 +29,11 @@ class RecurringCron {
   protected $time;
 
   /**
-   * The commerce_recurring_order_refresh queue.
+   * The commerce_recurring_order_renew queue.
    *
    * @var \Drupal\Core\Queue\QueueInterface
    */
-  protected $recurringOrderRefreshQueue;
+  protected $recurringOrderRenewQueue;
 
   /**
    * The commerce_recurring_order_close queue.
@@ -55,7 +55,7 @@ class RecurringCron {
   public function __construct(EntityTypeManagerInterface $entity_type_manager, TimeInterface $time, QueueFactory $queue_factory) {
     $this->orderStorage = $entity_type_manager->getStorage('commerce_order');
     $this->time = $time;
-    $this->recurringOrderRefreshQueue = $queue_factory->get('commerce_recurring_order_refresh');
+    $this->recurringOrderRenewQueue = $queue_factory->get('commerce_recurring_order_renew');
     $this->recurringOrderCloseQueue = $queue_factory->get('commerce_recurring_order_close');
   }
 
@@ -73,7 +73,7 @@ class RecurringCron {
       $this->recurringOrderCloseQueue->createItem([
         'order_id' => $order->id(),
       ]);
-      $this->recurringOrderRefreshQueue->createItem([
+      $this->recurringOrderRenewQueue->createItem([
         'order_id' => $order->id(),
       ]);
     }
@@ -89,6 +89,7 @@ class RecurringCron {
       ->condition('type', 'recurring')
       // @todo Should we filter by the state of the order?
       ->condition('ended', $this->time->getRequestTime(), '<')
+      ->condition('state', 'canceled', '<>')
       ->execute();
     /** @var \Drupal\commerce_order\Entity\OrderItemInterface[] $order_items */
     $orders = $this->orderStorage->loadMultiple($result);

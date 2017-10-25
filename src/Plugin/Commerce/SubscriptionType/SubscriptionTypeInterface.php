@@ -33,7 +33,7 @@ interface SubscriptionTypeInterface extends BundlePluginInterface, ConfigurableP
    */
   public function createRecurringOrder(SubscriptionInterface $subscription);
 
-  public function refreshRecurringOrder(SubscriptionInterface $subscription, OrderInterface $previous_recurring_order);
+  public function renewRecurringOrder(SubscriptionInterface $subscription, OrderInterface $previous_recurring_order);
 
 }
 

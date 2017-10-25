@@ -19,10 +19,11 @@ class RecurringOrderClose extends PluginBase implements QueueWorkerInterface {
    * {@inheritdoc}
    */
   public function processItem($data) {
+    /** @var \Drupal\commerce_order\Entity\OrderInterface $order */
     $order = Order::load($data['order_id']);
 
-    // Somehow leverage usage groups to be able to determine whether the order
-    // can be closed.
+    $order->getState()->applyTransition($order->getState()['cancel']);
+    $order->save();
   }
 
 }

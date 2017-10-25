@@ -8,12 +8,12 @@ use Drupal\Core\Queue\QueueWorkerInterface;
 
 /**
  * @QueueWorker(
- *   id = "commerce_recurring_order_refresh",
- *   title = "Recurring order refresh",
+ *   id = "commerce_recurring_order_renew",
+ *   title = "Recurring order renew",
  *   cron = {"time" = 60},
  * )
  */
-class RecurringOrderRefresh extends PluginBase implements QueueWorkerInterface {
+class RecurringOrderRenew extends PluginBase implements QueueWorkerInterface {
 
   /**
    * {@inheritdoc}
@@ -24,7 +24,7 @@ class RecurringOrderRefresh extends PluginBase implements QueueWorkerInterface {
     if (!$subscriptions = $order->get('order_subscriptions')) {
       /** @var \Drupal\commerce_recurring\Entity\SubscriptionInterface $subscription */
       foreach ($subscriptions as $subscription) {
-        $subscription->getType()->refreshRecurringOrder($subscription, $order);
+        $subscription->getType()->renewRecurringOrder($subscription, $order);
       }
     }
   }

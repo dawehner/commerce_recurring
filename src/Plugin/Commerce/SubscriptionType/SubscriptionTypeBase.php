@@ -127,7 +127,7 @@ abstract class SubscriptionTypeBase extends PluginBase implements SubscriptionTy
   /**
    * {@inheritdoc}
    */
-  public function refreshRecurringOrder(SubscriptionInterface $subscription, OrderInterface $previous_recurring_order) {
+  public function renewRecurringOrder(SubscriptionInterface $subscription, OrderInterface $previous_recurring_order) {
     /** @var \Drupal\commerce_order\OrderItemStorageInterface $order_item_storage */
     $order_item_storage = \Drupal::entityTypeManager()->getStorage('commerce_order_item');
 
