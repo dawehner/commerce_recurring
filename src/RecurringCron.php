@@ -2,9 +2,9 @@
 
 namespace Drupal\commerce_recurring;
 
+use Drupal\advancedqueue\Job;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Queue\QueueFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -31,14 +31,14 @@ class RecurringCron {
   /**
    * The commerce_recurring_order_renew queue.
    *
-   * @var \Drupal\Core\Queue\QueueInterface
+   * @var \Drupal\advancedqueue\Entity\QueueInterface
    */
-  protected $recurringOrderRenewQueue;
+  protected $recurringQueue;
 
   /**
    * The commerce_recurring_order_close queue.
    *
-   * @var \Drupal\Core\Queue\QueueInterface
+   * @var \Drupal\advancedqueue\Entity\QueueInterface
    */
   protected $recurringOrderCloseQueue;
 
@@ -49,33 +49,31 @@ class RecurringCron {
    *   The entity type manager.
    * @param \Drupal\Component\Datetime\TimeInterface $time
    *   The time.
-   * @param \Drupal\Core\Queue\QueueFactory $queue_factory
-   *   The queue factory
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, TimeInterface $time, QueueFactory $queue_factory) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, TimeInterface $time) {
     $this->orderStorage = $entity_type_manager->getStorage('commerce_order');
     $this->time = $time;
-    $this->recurringOrderRenewQueue = $queue_factory->get('commerce_recurring_order_renew');
-    $this->recurringOrderCloseQueue = $queue_factory->get('commerce_recurring_order_close');
+    $this->recurringQueue = $entity_type_manager->getStorage('advancedqueue_queue')->load('commerce_recurring');
   }
 
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity_type.manager'),
-      $container->get('datetime.time'),
-      $container->get('queue')
+      $container->get('datetime.time')
     );
   }
 
   public function cron() {
     $ended_orders = $this->getEndedRecurringOrders();
     foreach ($ended_orders as $order) {
-      $this->recurringOrderCloseQueue->createItem([
+      $this->recurringQueue->enqueueJob(Job::create('commerce_recurring_order_close', [
+        'title' => 'Close recurring order #' . $order->id(),
         'order_id' => $order->id(),
-      ]);
-      $this->recurringOrderRenewQueue->createItem([
+        ]));
+      $this->recurringQueue->enqueueJob(Job::create('commerce_recurring_order_renew', [
+        'title' => 'Renew recurring order #' . $order->id(),
         'order_id' => $order->id(),
-      ]);
+      ]));
     }
   }
 

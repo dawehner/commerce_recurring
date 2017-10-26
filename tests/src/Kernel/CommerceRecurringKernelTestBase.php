@@ -22,6 +22,7 @@ class CommerceRecurringKernelTestBase extends CommerceKernelTestBase {
    */
   public static $modules = [
     'action',
+    'advancedqueue',
     'address',
     'commerce',
     'commerce_order',
@@ -80,6 +81,7 @@ class CommerceRecurringKernelTestBase extends CommerceKernelTestBase {
     $this->installEntitySchema('commerce_product_variation');
     $this->installEntitySchema('commerce_subscription');
     $this->installEntitySchema('user');
+    $this->installSchema('advancedqueue', 'advancedqueue');
     $this->installConfig('entity');
     $this->installConfig('commerce_product');
     $this->installConfig('commerce_order');

@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\commerce_recurring\Kernel;
 
+use Drupal\advancedqueue\Entity\Queue;
 use Drupal\commerce_price\Price;
 use Drupal\commerce_recurring\Entity\Subscription;
 use Drupal\commerce_recurring\RecurringCron;
@@ -73,10 +74,17 @@ class RecurringOrderRenewTest extends CommerceRecurringKernelTestBase {
     // already.
     RecurringCron::create(\Drupal::getContainer())->cron();
 
-    $this->assertEquals(1, \Drupal::queue('commerce_recurring_order_renew')->numberOfItems());
-    $this->assertEquals(['order_id' => $order->id()], \Drupal::queue('commerce_recurring_order_renew')->claimItem()->data);
-    $this->assertEquals(1, \Drupal::queue('commerce_recurring_order_close')->numberOfItems());
-    $this->assertEquals(['order_id' => $order->id()], \Drupal::queue('commerce_recurring_order_close')->claimItem()->data);
+    /** @var \Drupal\advancedqueue\Entity\QueueInterface $queue */
+    $queue = Queue::load('commerce_recurring');
+    $this->assertEquals(['queued' => 2, 'processing' => 0,'success' => 0, 'failure' => 0], $queue->getBackend()->countJobs());
+
+    $job1 = $queue->getBackend()->claimJob();
+    $job2 = $queue->getBackend()->claimJob();
+
+    $this->assertArraySubset(['order_id' => $order->id()], $job1->getPayload());
+    $this->assertEquals('commerce_recurring_order_close', $job1->getType());
+    $this->assertArraySubset(['order_id' => $order->id()], $job2->getPayload());
+    $this->assertEquals('commerce_recurring_order_renew', $job2->getType());
   }
 
   /**
