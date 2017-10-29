@@ -17,7 +17,7 @@ class Fixed extends IntervalBase {
    * {@inheritdoc}
    */
   public function getFirstBillingCycle(DrupalDateTime $start_time) {
-    $start_time = clone $start_time;
+    $start_time = $this->determineFirstStartTime($start_time);
 
     switch ($this->configuration['unit']) {
       case 'hour':

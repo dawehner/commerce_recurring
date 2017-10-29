@@ -17,7 +17,7 @@ class Rolling extends IntervalBase {
    * {@inheritdoc}
    */
   public function getFirstBillingCycle(DrupalDateTime $start_time) {
-    $start_time = clone $start_time;
+    $start_time = $this->determineFirstStartTime($start_time);
 
     $end_date = clone $start_time;
     $end_date = $this->modifyTime($end_date, $this->configuration['number'], $this->configuration['unit']);

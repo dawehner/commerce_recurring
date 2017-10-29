@@ -149,4 +149,56 @@ class RollingTest extends KernelTestBase {
     $this->assertEquals('2021-10-09', $result2->getEndDate()->format('Y-m-d'));
   }
 
+  public function testPrepaidMultipleCycles() {
+    $fixed = new Rolling([
+      'number' => 1,
+      'unit' => 'month',
+      'billing_type' => 'prepaid',
+    ], '', []);
+
+    $date = new DrupalDateTime('2017-10-09T15:07:12');
+    $result = $fixed->getFirstBillingCycle($date);
+    $result2 = $fixed->getNextBillingCycle($result);
+    $result3 = $fixed->getNextBillingCycle($result2);
+    $result4 = $fixed->getNextBillingCycle($result3);
+
+    $this->assertEquals('2017-11-09', $result->getStartDateTime()->format('Y-m-d'));
+    $this->assertEquals('2017-12-09', $result->getEndDateTime()->format('Y-m-d'));
+
+    $this->assertEquals('2017-12-09', $result2->getStartDateTime()->format('Y-m-d'));
+    $this->assertEquals('2018-01-09', $result2->getEndDateTime()->format('Y-m-d'));
+
+    $this->assertEquals('2018-01-09', $result3->getStartDateTime()->format('Y-m-d'));
+    $this->assertEquals('2018-02-09', $result3->getEndDateTime()->format('Y-m-d'));
+
+    $this->assertEquals('2018-02-09', $result4->getStartDateTime()->format('Y-m-d'));
+    $this->assertEquals('2018-03-09', $result4->getEndDateTime()->format('Y-m-d'));
+  }
+
+  public function testPostpaidMultipleCycles() {
+    $fixed = new Rolling([
+      'number' => 1,
+      'unit' => 'month',
+      'billing_type' => 'postpaid',
+    ], '', []);
+
+    $date = new DrupalDateTime('2017-10-09T15:07:12');
+    $result = $fixed->getFirstBillingCycle($date);
+    $result2 = $fixed->getNextBillingCycle($result);
+    $result3 = $fixed->getNextBillingCycle($result2);
+    $result4 = $fixed->getNextBillingCycle($result3);
+
+    $this->assertEquals('2017-10-09', $result->getStartDateTime()->format('Y-m-d'));
+    $this->assertEquals('2017-11-09', $result->getEndDate()->format('Y-m-d'));
+
+    $this->assertEquals('2017-11-09', $result2->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2017-12-09', $result2->getEndDate()->format('Y-m-d'));
+
+    $this->assertEquals('2017-12-09', $result3->getStartDateTime()->format('Y-m-d'));
+    $this->assertEquals('2018-01-09', $result3->getEndDateTime()->format('Y-m-d'));
+
+    $this->assertEquals('2018-01-09', $result4->getStartDateTime()->format('Y-m-d'));
+    $this->assertEquals('2018-02-09', $result4->getEndDateTime()->format('Y-m-d'));
+  }
+
 }

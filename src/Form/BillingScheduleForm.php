@@ -102,6 +102,18 @@ class BillingScheduleForm extends CommercePluginEntityFormBase {
       '#plugin_id' => $plugin,
       '#default_value' => $plugin_configuration,
     ];
+  
+    $form['billing_type'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Billing type'),
+      '#options' => [
+        'prepaid' => $this->t('Prepaid'),
+        'postpaid' => $this->t('Postpaid'),
+      ],
+      '#default_value' => $this->entity->getBillingType(),
+    ];
+
+
     $form['status'] = [
       '#type' => 'radios',
       '#title' => $this->t('Status'),

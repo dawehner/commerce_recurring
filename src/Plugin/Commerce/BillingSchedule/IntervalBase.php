@@ -16,9 +16,9 @@ abstract class IntervalBase extends BillingScheduleBase {
    */
   public function defaultConfiguration() {
     return [
-      'number' => 1,
-      'unit' => 'month',
-    ] + parent::defaultConfiguration();
+        'number' => 1,
+        'unit' => 'month',
+      ] + parent::defaultConfiguration();
   }
 
   /**
@@ -109,6 +109,23 @@ abstract class IntervalBase extends BillingScheduleBase {
   public function getNextBillingCycle(BillingCycle $cycle) {
     // @todo Should we have some + / - second offset?
     return new BillingCycle($cycle->getEndDate(), $this->modifyTime($cycle->getEndDate(), $this->configuration['number'], $this->configuration['unit']));
+  }
+
+  /**
+   * Determines the initial start time, which depend on the billing type.
+   *
+   * @param \Drupal\Core\Datetime\DrupalDateTime $start_time
+   *   The start time.
+   *
+   * @return \Drupal\Core\Datetime\DrupalDateTime
+   *   The initial time.
+   */
+  protected function determineFirstStartTime(DrupalDateTime $start_time) {
+    $start_time = clone $start_time;
+    if ($this->getConfiguration()['billing_type'] === 'prepaid') {
+      $start_time = $this->modifyTime($start_time, $this->configuration['number'], $this->configuration['unit']);
+    }
+    return $start_time;
   }
 
 }

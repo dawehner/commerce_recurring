@@ -62,4 +62,21 @@ interface BillingScheduleInterface extends ConfigEntityInterface, EntityWithPlug
    */
   public function setPluginConfiguration(array $configuration);
 
+  /**
+   * Returns the billing type, either prepaid or postpaid.
+   *
+   * @return string
+   */
+  public function getBillingType();
+
+  /**
+   * Sets the billing type.
+   *
+   * @param string $billing_type
+   *   The billing type, either prepaid or postpaid.
+   *
+   * @return $this
+   */
+  public function setBillingType($billing_type);
+
 }

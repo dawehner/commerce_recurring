@@ -78,6 +78,13 @@ class BillingSchedule extends ConfigEntityBase implements BillingScheduleInterfa
   protected $display_label;
 
   /**
+   * The billing type, either 'prepaid' or 'postpaid'.
+   *
+   * @var string
+   */
+  protected $billing_type = 'postpaid';
+
+  /**
    * The plugin ID.
    *
    * @var string
@@ -184,6 +191,26 @@ class BillingSchedule extends ConfigEntityBase implements BillingScheduleInterfa
       $this->pluginCollection = new CommerceSinglePluginCollection($plugin_manager, $this->plugin, $this->configuration, $this->id);
     }
     return $this->pluginCollection;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getBillingType() {
+    return $this->billing_type;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setBillingType($billing_type) {
+    if (!in_array($billing_type, ['prepaid', 'postpaid'], TRUE)) {
+      throw new \InvalidArgumentException("Billing type can just be 'prepaid' and 'postpaid'.");
+    }
+ 
+    $this->billing_type = $billing_type;
+
+    return $this;
   }
 
 }
