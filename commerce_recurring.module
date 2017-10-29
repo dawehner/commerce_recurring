@@ -1,3 +1,12 @@
 <?php
 
+use Drupal\commerce_recurring\RecurringCron;
+
+/**
+ * Implements hook_cron().
+ */
+function commerce_recurring_cron() {
+  return RecurringCron::create(\Drupal::getContainer())->cron();
+}
+
 

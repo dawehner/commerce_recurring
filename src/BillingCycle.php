@@ -43,7 +43,7 @@ final class BillingCycle {
    * @param \Drupal\Core\Datetime\DrupalDateTime $endDate
    *   The end time.
    */
-  public function __construct( $index, DrupalDateTime $startDate, DrupalDateTime $endDate) {
+  public function __construct($index, DrupalDateTime $startDate, DrupalDateTime $endDate) {
     $this->index = $index;
     $this->startDate = $startDate;
     $this->endDate = $endDate;
