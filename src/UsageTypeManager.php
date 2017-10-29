@@ -53,6 +53,3 @@ class UsageTypeManager extends DefaultPluginManager {
   }
 
 }
-
-
-

@@ -39,8 +39,7 @@ class BillingScheduleTest extends KernelTestBase {
       'configuration' => [
         'key' => 'value',
       ],
-    ])
-      ->save();
+    ])->save();
 
     $billing_schedule = BillingSchedule::load('test_id');
     $this->assertEquals('test_id', $billing_schedule->id());
@@ -57,8 +56,7 @@ class BillingScheduleTest extends KernelTestBase {
       'configuration' => [
         'key' => 'value',
       ],
-    ])
-      ->save();
+    ])->save();
 
     /** @var \Drupal\commerce_recurring\Entity\BillingScheduleInterface $billing_schedule */
     $billing_schedule = BillingSchedule::load('test_id');

@@ -13,31 +13,19 @@ function commerce_recurring_schema() {
         'unsigned' => TRUE,
         'not null' => TRUE,
       ],
-      'usage_group' => [
-        'description' => 'The usage group, as defined in usage_groups.yml, maybe.', // @TODO: Work this out.
-        'type' => 'varchar',
+      'usage_type' => [
+        'description' => 'The usage type.',
+        'type' => 'varchar_ascii',
         'length' => 255,
         'not null' => TRUE,
         'default' => '',
       ],
       'subscription_id' => [
-        'description' => 'The id of the license.',
+        'description' => 'The subscription ID.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
       ],
-      'product_variation_id' => [
-        'description' => 'The id of the product variation this usage record will create a charge for.',
-        'type' => 'int',
-        'not null' => FALSE,
-      ],
-      // @TODO: Figure out what to do about this!!!!!!!
-      // 'revision_id' => array(
-      //   'description' => 'The revision id of the license.',
-      //   'type' => 'int',
-      //   'not null' => TRUE,
-      //   'default' => 0,
-      // ),
       'quantity' => [
         'description' => 'The usage quantity.',
         'type' => 'int',
@@ -57,9 +45,8 @@ function commerce_recurring_schema() {
     ],
     'primary key' => ['usage_id'],
     'indexes' => [
-      'combined' => ['usage_group', 'subscription_id'],
+      'combined' => ['usage_type', 'subscription_id'],
       'timing' => ['start', 'end'],
     ],
   ];
-
 }

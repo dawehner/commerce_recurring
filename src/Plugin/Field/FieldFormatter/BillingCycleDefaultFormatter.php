@@ -6,7 +6,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 
 /**
- * Provides a default billing cycle formatter
+ * Provides the default billing cycle formatter.
  *
  * @FieldFormatter(
  *   id = "commerce_billing_cycle_default",
@@ -32,10 +32,9 @@ class BillingCycleDefaultFormatter extends FormatterBase {
       $build[] = [
         '#theme' => 'item_list',
         '#items' => [
-          $item->toBillingCycle()->getIndex(),
-          $item->toBillingCycle()->getStartDateTime()->format('c'),
-          $item->toBillingCycle()->getEndDateTime()->format('c'),
-        ]
+          $item->toBillingCycle()->getStartDate()->format('c'),
+          $item->toBillingCycle()->getEndDate()->format('c'),
+        ],
       ];
     }
     return $build;

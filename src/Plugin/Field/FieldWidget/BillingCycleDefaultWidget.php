@@ -23,10 +23,6 @@ class BillingCycleDefaultWidget extends WidgetBase {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $element['index'] += [
-      '#type' => 'number',
-      '#default_value' => $items->get($delta)->index,
-    ];
     $element['start_date'] += [
       '#type' => 'textfield',
       '#default_value' => $items->get($delta)->start_date,

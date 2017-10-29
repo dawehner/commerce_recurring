@@ -1,14 +1,12 @@
 <?php
 
-
 namespace Drupal\commerce_recurring\Entity;
 
-use Drupal\commerce_order\Entity\OrderInterface;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Entity\EntityWithPluginCollectionInterface;
 
 /**
- * Defines the interface for billing schedules configuration entities.
+ * Defines the interface for billing schedules.
  */
 interface BillingScheduleInterface extends ConfigEntityInterface, EntityWithPluginCollectionInterface {
 
@@ -16,6 +14,7 @@ interface BillingScheduleInterface extends ConfigEntityInterface, EntityWithPlug
    * Gets the customer facing label.
    *
    * @return string
+   *   The display label.
    */
   public function getDisplayLabel();
 
@@ -64,4 +63,3 @@ interface BillingScheduleInterface extends ConfigEntityInterface, EntityWithPlug
   public function setPluginConfiguration(array $configuration);
 
 }
-

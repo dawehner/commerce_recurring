@@ -16,9 +16,9 @@ abstract class IntervalBase extends BillingScheduleBase {
    */
   public function defaultConfiguration() {
     return [
-        'number' => 1,
-        'unit' => 'month',
-      ] + parent::defaultConfiguration();
+      'number' => 1,
+      'unit' => 'month',
+    ] + parent::defaultConfiguration();
   }
 
   /**
@@ -80,18 +80,23 @@ abstract class IntervalBase extends BillingScheduleBase {
       case 'hour':
         $date->modify("+{$number} hour");
         break;
+
       case 'day':
         $date->modify("+{$number} day");
         break;
+
       case 'week':
         $date->modify("+{$number} week");
         break;
+
       case 'month':
         $date->modify("+{$number} month");
         break;
+
       case 'year':
         $date->modify("+{$number} year");
         break;
+
       default:
         throw new \Exception('You missed a case ...');
     }
@@ -103,7 +108,7 @@ abstract class IntervalBase extends BillingScheduleBase {
    */
   public function getNextBillingCycle(BillingCycle $cycle) {
     // @todo Should we have some + / - second offset?
-    return new BillingCycle($cycle->getIndex() + 1, $cycle->getEndDateTime(), $this->modifyTime($cycle->getEndDateTime(), $this->configuration['number'], $this->configuration['unit']));
+    return new BillingCycle($cycle->getEndDate(), $this->modifyTime($cycle->getEndDate(), $this->configuration['number'], $this->configuration['unit']));
   }
 
 }

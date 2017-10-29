@@ -2,7 +2,6 @@
 
 namespace Drupal\commerce_recurring\Entity;
 
-
 use Drupal\commerce\PurchasableEntityInterface;
 use Drupal\commerce_payment\Entity\PaymentMethodInterface;
 use Drupal\commerce_price\Price;
@@ -112,7 +111,6 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
     $this->set('billing_schedule', $billing_schedule);
     return $this;
   }
-
 
   /**
    * {@inheritdoc}
@@ -417,4 +415,5 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
 
     return $fields;
   }
+
 }

@@ -22,7 +22,7 @@ class Rolling extends IntervalBase {
     $end_date = clone $start_time;
     $end_date = $this->modifyTime($end_date, $this->configuration['number'], $this->configuration['unit']);
 
-    return new BillingCycle(0, $start_time, $end_date);
+    return new BillingCycle($start_time, $end_date);
   }
 
 }

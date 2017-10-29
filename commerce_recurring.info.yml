@@ -1,9 +1,10 @@
-name: Commerce Recurring
+name: 'Commerce Recurring'
 type: module
-description: Recurring orders and subscriptions
+description: 'Provides recurring billing for Drupal Commerce'
 core: 8.x
-package: Commerce
+package: 'Commerce (contrib)'
 dependencies:
   - commerce
-  - commerce_payment
+  - commerce:commerce_order
+  - commerce:commerce_payment
   - state_machine

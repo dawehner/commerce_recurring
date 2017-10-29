@@ -46,7 +46,6 @@ class BillingCycleFieldTest extends KernelTestBase {
 
     $entity = EntityTest::create([
       'field_billing_cycle' => [
-        'index' => 0,
         'start_date' => '2017-10-09T15:07:12',
         'end_date' => '2017-11-09T15:07:12',
       ],
@@ -58,11 +57,10 @@ class BillingCycleFieldTest extends KernelTestBase {
     /** @var \Drupal\commerce_recurring\BillingCycle $billing_cycle */
     $billing_cycle = $entity->get('field_billing_cycle')->get(0)->toBillingCycle();
     $this->assertInstanceOf(BillingCycle::class, $billing_cycle);
-    $this->assertEquals(0, $billing_cycle->getIndex());
-    $this->assertInstanceOf(DrupalDateTime::class, $billing_cycle->getStartDateTime());
-    $this->assertInstanceOf(DrupalDateTime::class, $billing_cycle->getEndDateTime());
-    $this->assertEquals('2017-10-09T15:07:12', $billing_cycle->getStartDateTime()->format('Y-m-d\TH:i:s'));
-    $this->assertEquals('2017-11-09T15:07:12', $billing_cycle->getEndDateTime()->format('Y-m-d\TH:i:s'));
+    $this->assertInstanceOf(DrupalDateTime::class, $billing_cycle->getStartDate());
+    $this->assertInstanceOf(DrupalDateTime::class, $billing_cycle->getEndDate());
+    $this->assertEquals('2017-10-09T15:07:12', $billing_cycle->getStartDate()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-11-09T15:07:12', $billing_cycle->getEndDate()->format('Y-m-d\TH:i:s'));
 
     // Make it possible to set date time objects
     $entity->get('field_billing_cycle')->get(0)->setValue([
@@ -72,7 +70,7 @@ class BillingCycleFieldTest extends KernelTestBase {
 
     $billing_cycle = $entity->get('field_billing_cycle')->get(0)->toBillingCycle();
     $this->assertInstanceOf(BillingCycle::class, $billing_cycle);
-    $this->assertEquals('2018-10-09T15:07:12', $billing_cycle->getStartDateTime()->format('Y-m-d\TH:i:s'));
-    $this->assertEquals('2019-10-09T15:07:12', $billing_cycle->getEndDateTime()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2018-10-09T15:07:12', $billing_cycle->getStartDate()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2019-10-09T15:07:12', $billing_cycle->getEndDate()->format('Y-m-d\TH:i:s'));
   }
 }

@@ -28,7 +28,6 @@ class BillingScheduleListBuilder extends EntityListBuilder {
     return $header + parent::buildHeader();
   }
 
-  
   /**
    * {@inheritdoc}
    */

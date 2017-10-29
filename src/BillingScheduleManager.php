@@ -53,5 +53,3 @@ class BillingScheduleManager extends DefaultPluginManager {
   }
 
 }
-
-

@@ -26,10 +26,6 @@ class BillingCycleItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
-    $properties['index'] = DataDefinition::create('integer')
-      ->setLabel(t('Index'))
-      ->setRequired(TRUE);
-    // @todo Should we add a constraint that end_date is always > start_date?
     $properties['start_date'] = DataDefinition::create('datetime_iso8601')
       ->setLabel(t('Start date value'))
       ->setRequired(TRUE);
@@ -46,11 +42,6 @@ class BillingCycleItem extends FieldItemBase {
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
     return [
       'columns' => [
-        'index' => [
-          'type' => 'int',
-          'unsigned' => TRUE,
-          'size' => 'normal',
-        ],
         'start_date' => [
           'description' => 'The start date value.',
           'type' => 'varchar',
@@ -91,9 +82,8 @@ class BillingCycleItem extends FieldItemBase {
     // Allow callers to pass a Price value object as the field item value.
     if ($values instanceof BillingCycleObject) {
       $values = [
-        'index' => $values->getIndex(),
-        'start_date' => $values->getStartDateTime()->format('c'),
-        'end_date' => $values->getEndDateTime()->format('c'),
+        'start_date' => $values->getStartDate()->format('c'),
+        'end_date' => $values->getEndDate()->format('c'),
       ];
     }
 
@@ -114,7 +104,7 @@ class BillingCycleItem extends FieldItemBase {
    *   The billing cycle object.
    */
   public function toBillingCycle() {
-    return new BillingCycleObject($this->index, new DrupalDateTime($this->start_date), new DrupalDateTime($this->end_date));
+    return new BillingCycleObject(new DrupalDateTime($this->start_date), new DrupalDateTime($this->end_date));
   }
 
 }

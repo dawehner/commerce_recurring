@@ -32,4 +32,3 @@ class CommerceBillingSchedule extends Plugin {
   public $label;
 
 }
-

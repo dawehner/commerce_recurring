@@ -30,6 +30,5 @@ class CommerceRecurringUsageType extends Plugin {
    * @var \Drupal\Core\Annotation\Translation
    */
   public $label;
+
 }
-
-

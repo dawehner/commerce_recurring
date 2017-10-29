@@ -26,7 +26,7 @@ class License extends SubscriptionTypeBase {
    * {@inheritdoc}
    */
   public function collectCharges(BillingCycle $billing_cycle, SubscriptionInterface $subscription) {
-    return [new Charge($subscription->getAmount(), 'Label todo', $billing_cycle->getStartDateTime(), $billing_cycle->getEndDateTime())];
+    return [new Charge($subscription->getAmount(), 'Label todo', $billing_cycle->getStartDate(), $billing_cycle->getEndDate())];
   }
 
 }

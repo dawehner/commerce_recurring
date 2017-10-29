@@ -32,4 +32,3 @@ interface BillingScheduleInterface extends ConfigurablePluginInterface, PluginFo
   public function getNextBillingCycle(BillingCycle $cycle);
 
 }
-

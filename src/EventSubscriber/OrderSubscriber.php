@@ -2,7 +2,6 @@
 
 namespace Drupal\commerce_recurring\EventSubscriber;
 
-use Drupal\commerce_order\Entity\OrderInterface;
 use Drupal\commerce_product\Entity\ProductVariationInterface;
 use Drupal\commerce_recurring\Entity\Subscription;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -56,9 +55,7 @@ class OrderSubscriber implements EventSubscriberInterface {
     foreach ($order->getItems() as $item) {
       // @todo What do we do with other entity types?
       if (($purchased_entity = $item->getPurchasedEntity()) && $purchased_entity instanceof ProductVariationInterface && $purchased_entity->hasField('billing_schedule') && $purchased_entity->hasField('subscription_type')) {
-
         foreach ($purchased_entity->get('billing_schedule')->referencedEntities() as $billing_schedule) {
-    
           $subscription = Subscription::create([
             'type' => $purchased_entity->get('subscription_type')->target_plugin_id,
             'state' => 'active',

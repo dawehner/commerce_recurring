@@ -30,5 +30,5 @@ class CommerceSubscriptionType extends Plugin {
    * @var \Drupal\Core\Annotation\Translation
    */
   public $label;
-}
 
+}

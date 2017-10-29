@@ -187,4 +187,3 @@ class BillingSchedule extends ConfigEntityBase implements BillingScheduleInterfa
   }
 
 }
-

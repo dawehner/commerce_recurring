@@ -30,11 +30,11 @@ class FixedTest extends KernelTestBase {
     $result = $fixed->getFirstBillingCycle($date);
     $result2 = $fixed->getNextBillingCycle($result);
 
-    $this->assertEquals('2017-10-09T15:00:00', $result->getStartDateTime()->format('Y-m-d\TH:i:s'));
-    $this->assertEquals('2017-10-09T16:00:00', $result->getEndDateTime()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-09T15:00:00', $result->getStartDate()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-09T16:00:00', $result->getEndDate()->format('Y-m-d\TH:i:s'));
 
-    $this->assertEquals('2017-10-09T16:00:00', $result2->getStartDateTime()->format('Y-m-d\TH:i:s'));
-    $this->assertEquals('2017-10-09T17:00:00', $result2->getEndDateTime()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-09T16:00:00', $result2->getStartDate()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-09T17:00:00', $result2->getEndDate()->format('Y-m-d\TH:i:s'));
 
     // 5 hour
     $fixed = new Fixed([
@@ -46,11 +46,11 @@ class FixedTest extends KernelTestBase {
     $result = $fixed->getFirstBillingCycle($date);
     $result2 = $fixed->getNextBillingCycle($result);
 
-    $this->assertEquals('2017-10-09T15:00:00', $result->getStartDateTime()->format('Y-m-d\TH:i:s'));
-    $this->assertEquals('2017-10-09T20:00:00', $result->getEndDateTime()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-09T15:00:00', $result->getStartDate()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-09T20:00:00', $result->getEndDate()->format('Y-m-d\TH:i:s'));
 
-    $this->assertEquals('2017-10-09T20:00:00', $result2->getStartDateTime()->format('Y-m-d\TH:i:s'));
-    $this->assertEquals('2017-10-10T01:00:00', $result2->getEndDateTime()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-09T20:00:00', $result2->getStartDate()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-10T01:00:00', $result2->getEndDate()->format('Y-m-d\TH:i:s'));
 
     // 1 day
     $fixed = new Fixed([
@@ -62,11 +62,11 @@ class FixedTest extends KernelTestBase {
     $result = $fixed->getFirstBillingCycle($date);
     $result2 = $fixed->getNextBillingCycle($result);
 
-    $this->assertEquals('2017-10-09T00:00:00', $result->getStartDateTime()->format('Y-m-d\TH:i:s'));
-    $this->assertEquals('2017-10-10T00:00:00', $result->getEndDateTime()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-09T00:00:00', $result->getStartDate()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-10T00:00:00', $result->getEndDate()->format('Y-m-d\TH:i:s'));
 
-    $this->assertEquals('2017-10-10T00:00:00', $result2->getStartDateTime()->format('Y-m-d\TH:i:s'));
-    $this->assertEquals('2017-10-11T00:00:00', $result2->getEndDateTime()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-10T00:00:00', $result2->getStartDate()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-11T00:00:00', $result2->getEndDate()->format('Y-m-d\TH:i:s'));
 
     // 6 day
     $fixed = new Fixed([
@@ -78,11 +78,11 @@ class FixedTest extends KernelTestBase {
     $result = $fixed->getFirstBillingCycle($date);
     $result2 = $fixed->getNextBillingCycle($result);
 
-    $this->assertEquals('2017-10-09T00:00:00', $result->getStartDateTime()->format('Y-m-d\TH:i:s'));
-    $this->assertEquals('2017-10-15T00:00:00', $result->getEndDateTime()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-09T00:00:00', $result->getStartDate()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-15T00:00:00', $result->getEndDate()->format('Y-m-d\TH:i:s'));
 
-    $this->assertEquals('2017-10-15T00:00:00', $result2->getStartDateTime()->format('Y-m-d\TH:i:s'));
-    $this->assertEquals('2017-10-21T00:00:00', $result2->getEndDateTime()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-15T00:00:00', $result2->getStartDate()->format('Y-m-d\TH:i:s'));
+    $this->assertEquals('2017-10-21T00:00:00', $result2->getEndDate()->format('Y-m-d\TH:i:s'));
 
     // 2 week
     $fixed = new Fixed([
@@ -94,11 +94,11 @@ class FixedTest extends KernelTestBase {
     $result = $fixed->getFirstBillingCycle($date);
     $result2 = $fixed->getNextBillingCycle($result);
 
-    $this->assertEquals('2017-10-09', $result->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2017-10-23', $result->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2017-10-09', $result->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2017-10-23', $result->getEndDate()->format('Y-m-d'));
 
-    $this->assertEquals('2017-10-23', $result2->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2017-11-06', $result2->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2017-10-23', $result2->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2017-11-06', $result2->getEndDate()->format('Y-m-d'));
 
     // 1 month
     $fixed = new Fixed([
@@ -110,11 +110,11 @@ class FixedTest extends KernelTestBase {
     $result = $fixed->getFirstBillingCycle($date);
     $result2 = $fixed->getNextBillingCycle($result);
 
-    $this->assertEquals('2017-10-01', $result->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2017-11-01', $result->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2017-10-01', $result->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2017-11-01', $result->getEndDate()->format('Y-m-d'));
 
-    $this->assertEquals('2017-11-01', $result2->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2017-12-01', $result2->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2017-11-01', $result2->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2017-12-01', $result2->getEndDate()->format('Y-m-d'));
 
     // 2 month
     $fixed = new Fixed([
@@ -126,11 +126,11 @@ class FixedTest extends KernelTestBase {
     $result = $fixed->getFirstBillingCycle($date);
     $result2 = $fixed->getNextBillingCycle($result);
 
-    $this->assertEquals('2017-10-01', $result->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2017-12-01', $result->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2017-10-01', $result->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2017-12-01', $result->getEndDate()->format('Y-m-d'));
 
-    $this->assertEquals('2017-12-01', $result2->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2018-02-01', $result2->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2017-12-01', $result2->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2018-02-01', $result2->getEndDate()->format('Y-m-d'));
 
     // 2 year
     $fixed = new Fixed([
@@ -142,11 +142,11 @@ class FixedTest extends KernelTestBase {
     $result = $fixed->getFirstBillingCycle($date);
     $result2 = $fixed->getNextBillingCycle($result);
 
-    $this->assertEquals('2017-01-01', $result->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2019-01-01', $result->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2017-01-01', $result->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2019-01-01', $result->getEndDate()->format('Y-m-d'));
 
-    $this->assertEquals('2019-01-01', $result2->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2021-01-01', $result2->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2019-01-01', $result2->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2021-01-01', $result2->getEndDate()->format('Y-m-d'));
   }
 
 }

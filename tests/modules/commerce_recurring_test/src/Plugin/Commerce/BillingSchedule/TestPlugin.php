@@ -21,16 +21,16 @@ class TestPlugin extends BillingScheduleBase {
   public function getFirstBillingCycle(DrupalDateTime $start_time) {
     $end = clone $start_time;
     $end->modify('+50 seconds');
-    return new BillingCycle('My first billing cycle', $start_time, $end);
+    return new BillingCycle($start_time, $end);
   }
 
   /**
    * {@inheritdoc}
    */
   public function getNextBillingCycle(BillingCycle $cycle) {
-    $end = clone $cycle->getEndDateTime();
+    $end = clone $cycle->getEndDate();
     $end->modify('+50 seconds');
-    return new BillingCycle('My first billing cycle', $cycle->getEndDateTime(), $end);
+    return new BillingCycle($cycle->getEndDate(), $end);
   }
 
   /**

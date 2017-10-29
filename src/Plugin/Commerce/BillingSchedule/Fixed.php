@@ -23,18 +23,23 @@ class Fixed extends IntervalBase {
       case 'hour':
         $start_time->setTime($start_time->format('G'), 0);
         break;
+
       case 'day':
         $start_time->modify('midnight');
         break;
+
       case 'week':
         $start_time->modify('monday');
         break;
+
       case 'month':
         $start_time->modify('first day of this month');
         break;
+
       case 'year':
         $start_time->modify('first day of january');
         break;
+
       default:
         throw new \Exception('You missed a case ...');
     }
@@ -44,7 +49,7 @@ class Fixed extends IntervalBase {
 
     // @todo Provide edge handling. Maybe the scheduling queue should actually
     //   handle that.
-    return new BillingCycle(0, $start_time, $end_date);
+    return new BillingCycle($start_time, $end_date);
   }
 
 }
