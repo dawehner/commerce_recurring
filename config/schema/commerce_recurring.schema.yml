@@ -42,6 +42,3 @@ commerce_recurring.commerce_billing_schedule.plugin.rolling:
     unit:
       type: string
       label: Unit
-    billing_type:
-      type: string
-      label: Billing type

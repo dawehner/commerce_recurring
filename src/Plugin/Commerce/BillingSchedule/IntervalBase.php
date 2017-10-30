@@ -3,6 +3,7 @@
 namespace Drupal\commerce_recurring\Plugin\Commerce\BillingSchedule;
 
 use Drupal\commerce_recurring\BillingCycle;
+use Drupal\commerce_recurring\Entity\BillingSchedule;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -16,9 +17,9 @@ abstract class IntervalBase extends BillingScheduleBase {
    */
   public function defaultConfiguration() {
     return [
-        'number' => 1,
-        'unit' => 'month',
-      ] + parent::defaultConfiguration();
+      'number' => 1,
+      'unit' => 'month',
+    ] + parent::defaultConfiguration();
   }
 
   /**
@@ -122,7 +123,8 @@ abstract class IntervalBase extends BillingScheduleBase {
    */
   protected function determineFirstStartTime(DrupalDateTime $start_time) {
     $start_time = clone $start_time;
-    if ($this->getConfiguration()['billing_type'] === 'prepaid') {
+    $billing_schedule = BillingSchedule::load($this->entityIdy);
+    if ($billing_schedule->getBillingType() === 'prepaid') {
       $start_time = $this->modifyTime($start_time, $this->configuration['number'], $this->configuration['unit']);
     }
     return $start_time;

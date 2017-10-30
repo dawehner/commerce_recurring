@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\commerce_recurring\Plugin\Commerce\BillingSchedule;
 
+use Drupal\commerce_recurring\Entity\BillingSchedule;
 use Drupal\commerce_recurring\Plugin\Commerce\BillingSchedule\Rolling;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\KernelTests\KernelTestBase;
@@ -20,10 +21,13 @@ class RollingTest extends KernelTestBase {
   public static $modules = ['commerce_recurring'];
 
   public function testRolling() {
+    BillingSchedule::create(['id' => 'test'])->save();
+    
     // 1 hour
     $fixed = new Rolling([
       'number' => 1,
       'unit' => 'hour',
+      '_entity_id' => 'test',
     ], '', []);
 
     $date = new DrupalDateTime('2017-10-09T15:07:12');
@@ -40,6 +44,7 @@ class RollingTest extends KernelTestBase {
     $fixed = new Rolling([
       'number' => 5,
       'unit' => 'hour',
+      '_entity_id' => 'test',
     ], '', []);
 
     $date = new DrupalDateTime('2017-10-09T15:07:12');
@@ -56,6 +61,7 @@ class RollingTest extends KernelTestBase {
     $fixed = new Rolling([
       'number' => 1,
       'unit' => 'day',
+      '_entity_id' => 'test',
     ], '', []);
 
     $date = new DrupalDateTime('2017-10-09T15:07:12');
@@ -72,6 +78,7 @@ class RollingTest extends KernelTestBase {
     $fixed = new Rolling([
       'number' => 6,
       'unit' => 'day',
+      '_entity_id' => 'test',
     ], '', []);
 
     $date = new DrupalDateTime('2017-10-09T15:07:12');
@@ -88,6 +95,7 @@ class RollingTest extends KernelTestBase {
     $fixed = new Rolling([
       'number' => 2,
       'unit' => 'week',
+      '_entity_id' => 'test',
     ], '', []);
 
     $date = new DrupalDateTime('2017-10-09T15:07:12');
@@ -104,6 +112,7 @@ class RollingTest extends KernelTestBase {
     $fixed = new Rolling([
       'number' => 1,
       'unit' => 'month',
+      '_entity_id' => 'test',
     ], '', []);
 
     $date = new DrupalDateTime('2017-10-09T15:07:12');
@@ -120,6 +129,7 @@ class RollingTest extends KernelTestBase {
     $fixed = new Rolling([
       'number' => 2,
       'unit' => 'month',
+      '_entity_id' => 'test',
     ], '', []);
 
     $date = new DrupalDateTime('2017-10-09T15:07:12');
@@ -136,6 +146,7 @@ class RollingTest extends KernelTestBase {
     $fixed = new Rolling([
       'number' => 2,
       'unit' => 'year',
+      '_entity_id' => 'test',
     ], '', []);
 
     $date = new DrupalDateTime('2017-10-09T15:07:12');
@@ -150,10 +161,11 @@ class RollingTest extends KernelTestBase {
   }
 
   public function testPrepaidMultipleCycles() {
+    BillingSchedule::create(['id' => 'test', 'billing_type' => 'prepaid'])->save();
     $fixed = new Rolling([
       'number' => 1,
       'unit' => 'month',
-      'billing_type' => 'prepaid',
+      '_entity_id' => 'test',
     ], '', []);
 
     $date = new DrupalDateTime('2017-10-09T15:07:12');
@@ -162,24 +174,25 @@ class RollingTest extends KernelTestBase {
     $result3 = $fixed->getNextBillingCycle($result2);
     $result4 = $fixed->getNextBillingCycle($result3);
 
-    $this->assertEquals('2017-11-09', $result->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2017-12-09', $result->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2017-11-09', $result->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2017-12-09', $result->getEndDate()->format('Y-m-d'));
 
-    $this->assertEquals('2017-12-09', $result2->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2018-01-09', $result2->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2017-12-09', $result2->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2018-01-09', $result2->getEndDate()->format('Y-m-d'));
 
-    $this->assertEquals('2018-01-09', $result3->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2018-02-09', $result3->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2018-01-09', $result3->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2018-02-09', $result3->getEndDate()->format('Y-m-d'));
 
-    $this->assertEquals('2018-02-09', $result4->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2018-03-09', $result4->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2018-02-09', $result4->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2018-03-09', $result4->getEndDate()->format('Y-m-d'));
   }
 
   public function testPostpaidMultipleCycles() {
+    BillingSchedule::create(['id' => 'test', 'billing_type' => 'postpaid'])->save();
     $fixed = new Rolling([
       'number' => 1,
       'unit' => 'month',
-      'billing_type' => 'postpaid',
+      '_entity_id' => 'test',
     ], '', []);
 
     $date = new DrupalDateTime('2017-10-09T15:07:12');
@@ -188,17 +201,17 @@ class RollingTest extends KernelTestBase {
     $result3 = $fixed->getNextBillingCycle($result2);
     $result4 = $fixed->getNextBillingCycle($result3);
 
-    $this->assertEquals('2017-10-09', $result->getStartDateTime()->format('Y-m-d'));
+    $this->assertEquals('2017-10-09', $result->getStartDate()->format('Y-m-d'));
     $this->assertEquals('2017-11-09', $result->getEndDate()->format('Y-m-d'));
 
     $this->assertEquals('2017-11-09', $result2->getStartDate()->format('Y-m-d'));
     $this->assertEquals('2017-12-09', $result2->getEndDate()->format('Y-m-d'));
 
-    $this->assertEquals('2017-12-09', $result3->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2018-01-09', $result3->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2017-12-09', $result3->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2018-01-09', $result3->getEndDate()->format('Y-m-d'));
 
-    $this->assertEquals('2018-01-09', $result4->getStartDateTime()->format('Y-m-d'));
-    $this->assertEquals('2018-02-09', $result4->getEndDateTime()->format('Y-m-d'));
+    $this->assertEquals('2018-01-09', $result4->getStartDate()->format('Y-m-d'));
+    $this->assertEquals('2018-02-09', $result4->getEndDate()->format('Y-m-d'));
   }
 
 }

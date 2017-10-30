@@ -43,6 +43,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "label",
  *     "display_label",
  *     "status",
+ *     "billing_type",
  *     "plugin",
  *     "configuration",
  *   },
@@ -89,7 +90,7 @@ class BillingSchedule extends ConfigEntityBase implements BillingScheduleInterfa
    *
    * @var string
    */
-  protected $plugin = 'noop';
+  protected $plugin = 'fixed';
 
   /**
    * The plugin configuration.
@@ -207,7 +208,7 @@ class BillingSchedule extends ConfigEntityBase implements BillingScheduleInterfa
     if (!in_array($billing_type, ['prepaid', 'postpaid'], TRUE)) {
       throw new \InvalidArgumentException("Billing type can just be 'prepaid' and 'postpaid'.");
     }
- 
+
     $this->billing_type = $billing_type;
 
     return $this;
