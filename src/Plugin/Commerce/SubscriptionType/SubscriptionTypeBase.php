@@ -134,6 +134,9 @@ abstract class SubscriptionTypeBase extends PluginBase implements SubscriptionTy
     $next_billing_cycle = $subscription->getBillingSchedule()->getPlugin()->getNextBillingCycle($current_billing_cycle);
 
     // Create the order for the next billing cycles.
+    // @todo Take into account the schedules changes. In case the next cycle
+    //   is changing, we need to switch now, so we don't end up with some lack
+    //   of consistency.
     $next_order = Order::create([
       'type' => 'recurring',
       'uid' => $subscription->getCustomerId(),

@@ -3,6 +3,7 @@
 namespace Drupal\commerce_recurring\Plugin\Commerce\BillingSchedule;
 
 use Drupal\commerce_recurring\BillingCycle;
+use Drupal\commerce_recurring\Entity\BillingSchedule;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -109,6 +110,24 @@ abstract class IntervalBase extends BillingScheduleBase {
   public function getNextBillingCycle(BillingCycle $cycle) {
     // @todo Should we have some + / - second offset?
     return new BillingCycle($cycle->getEndDate(), $this->modifyTime($cycle->getEndDate(), $this->configuration['number'], $this->configuration['unit']));
+  }
+
+  /**
+   * Determines the initial start time, which depend on the billing type.
+   *
+   * @param \Drupal\Core\Datetime\DrupalDateTime $start_time
+   *   The start time.
+   *
+   * @return \Drupal\Core\Datetime\DrupalDateTime
+   *   The initial time.
+   */
+  protected function determineFirstStartTime(DrupalDateTime $start_time) {
+    $start_time = clone $start_time;
+    $billing_schedule = BillingSchedule::load($this->entityId);
+    if ($billing_schedule->getBillingType() === 'prepaid') {
+      $start_time = $this->modifyTime($start_time, $this->configuration['number'], $this->configuration['unit']);
+    }
+    return $start_time;
   }
 
 }
