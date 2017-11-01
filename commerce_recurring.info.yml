@@ -8,3 +8,4 @@ dependencies:
   - commerce:commerce_order
   - commerce:commerce_payment
   - state_machine
+  - advancedqueue

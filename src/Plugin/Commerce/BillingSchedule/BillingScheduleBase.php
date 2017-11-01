@@ -14,6 +14,10 @@ abstract class BillingScheduleBase extends PluginBase implements BillingSchedule
   public function __construct(array $configuration, $plugin_id, $plugin_definition) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
+    if (array_key_exists('_entity_id', $configuration)) {
+      $this->entityId = $configuration['_entity_id'];
+      unset($configuration['_entity_id']);
+    }
     $this->setConfiguration($configuration);
   }
 
