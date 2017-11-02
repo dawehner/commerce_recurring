@@ -82,7 +82,7 @@ class BillingSchedule extends ConfigEntityBase implements BillingScheduleInterfa
    *
    * @var string
    */
-  protected $plugin = 'noop';
+  protected $plugin = 'fixed';
 
   /**
    * The plugin configuration.

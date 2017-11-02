@@ -30,7 +30,7 @@ abstract class IntervalBase extends BillingScheduleBase {
     $form['number'] = [
       '#type' => 'number',
       '#title' => $this->t('Number'),
-      '#default_value' => $this->configuration['interval'],
+      '#default_value' => $this->configuration['number'],
     ];
 
     $form['unit'] = [
@@ -43,7 +43,7 @@ abstract class IntervalBase extends BillingScheduleBase {
         'month' => 'Month',
         'year' => 'Year',
       ],
-      '#default_value' => $this->configuration['interval'],
+      '#default_value' => $this->configuration['unit'],
     ];
 
     return $form;

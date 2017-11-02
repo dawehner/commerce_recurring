@@ -18,6 +18,16 @@ class BillingScheduleTest extends KernelTestBase {
    */
   public static $modules = ['commerce_recurring', 'commerce_recurring_test'];
 
+  public function testCreateWithNotSpecifiedPlugin() {
+    $billing_schedule = BillingSchedule::create([
+      'id' => 'test_id',
+      'label' => 'Test label',
+    ]);
+    $billing_schedule->save();
+
+    $this->assertEquals('fixed', $billing_schedule->getPluginId());
+  }
+
   public function testCreateWithNotExistingPlugin() {
     $this->setExpectedException(\Exception::class);
     BillingSchedule::create([
